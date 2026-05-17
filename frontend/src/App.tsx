@@ -1,91 +1,66 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useAuth } from './hooks/useAuth';
-import SignIn from './pages/auth/SignIn';  // tu componente de login
-import { AdminLayout } from './layouts/AdminLayout';
-import { RrhhLayout } from './layouts/RrhhLayout';
-import { EmployeeLayout } from './layouts/EmployeeLayout';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import { AuthProvider } from './contexts/AuthContext';
+import { useAuth } from './hooks/useAuth';
+import SignIn from './pages/auth/SignIn';
 
-// Páginas Admin
+// Componentes placeholder para testing
+const AdminDashboard = () => <div>Admin Dashboard (test)</div>;
+const RrhhDashboard = () => <div>RRHH Dashboard (test)</div>;
+const EmployeeDashboard = () => <div>Employee Dashboard (test)</div>;
 
-import AdminSolicitudesPage from './pages/admin/SolicitudesPage';
+// Layouts simplificados para test
+const AdminLayout = ({ onLogout }: { onLogout: () => void }) => (
+  <div>
+    <h1>Admin Layout</h1>
+    <button onClick={onLogout}>Cerrar sesión</button>
+    <AdminDashboard />
+  </div>
+);
+const RrhhLayout = ({ onLogout }: { onLogout: () => void }) => (
+  <div>
+    <h1>RRHH Layout</h1>
+    <button onClick={onLogout}>Cerrar sesión</button>
+    <RrhhDashboard />
+  </div>
+);
+const EmployeeLayout = ({ onLogout }: { onLogout: () => void }) => (
+  <div>
+    <h1>Employee Layout</h1>
+    <button onClick={onLogout}>Cerrar sesión</button>
+    <EmployeeDashboard />
+  </div>
+);
 
+const theme = createTheme({ palette: { primary: { main: '#1976d2' } } });
 
-// Páginas RRHH
-import RrhhDashboardPage from './pages/rrhh/DashboardPageRR';
-import RrhhEmpleadosPage from './pages/rrhh/EmpleadosPage';
-import RrhhSolicitudesPage from './pages/rrhh/SolicitudesPage';
-import RrhhReportesPage from './pages/rrhh/ReportesPage';
-
-// Páginas Empleado
-import EmployeeDashboardPage from './pages/employee/DashboardPageEM';
-import EmployeeAsistenciaPage from './pages/employee/AsistenciaPage';
-import EmployeeSolicitudesPage from './pages/employee/SolicitudesPage';
-
-const AppContent: React.FC = () => {
+const AppContent = () => {
   const { user, isAuthenticated, isLoading, logout } = useAuth();
 
-  if (isLoading) return null; // o un spinner
-
-  if (!isAuthenticated) {
-    return <SignIn />; // tu componente de login ya maneja el éxito
-  }
+  if (isLoading) return <div>Cargando...</div>;
+  if (!isAuthenticated) return <SignIn />;
 
   const role = user?.role;
+  if (!role) return <Navigate to="/login" />;
 
-  // Admin
-  if (role === 'admin') {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<AdminLayout onLogout={logout} />}>
-
-            <Route path="solicitudes" element={<AdminSolicitudesPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    );
-  }
-
-  // RRHH
-  if (role === 'rrhh') {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<RrhhLayout onLogout={logout} />}>
-            <Route index element={<RrhhDashboardPage />} />
-            <Route path="empleados" element={<RrhhEmpleadosPage />} />
-            <Route path="solicitudes" element={<RrhhSolicitudesPage />} />
-            <Route path="reportes" element={<RrhhReportesPage />} />
-            <Route path="*" element={<RrhhDashboardPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    );
-  }
-
-  // Employee
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<EmployeeLayout onLogout={logout} />}>
-          <Route index element={<EmployeeDashboardPage />} />
-          <Route path="asistencia" element={<EmployeeAsistenciaPage />} />
-          <Route path="solicitudes" element={<EmployeeSolicitudesPage />} />
-          <Route path="*" element={<EmployeeDashboardPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  if (role === 'admin') return <AdminLayout onLogout={logout} />;
+  if (role === 'rrhh') return <RrhhLayout onLogout={logout} />;
+  return <EmployeeLayout onLogout={logout} />;
 };
 
-const App: React.FC = () => {
+function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   );
-};
+}
 
 export default App;

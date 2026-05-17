@@ -1,7 +1,10 @@
-@import 'settings/_variables.css';
-@import 'generic/_reset.css';
-@import 'elements/_base.css';  /* si tienes */
-@import '5-components/_button.css';
-@import '5-components/_input.css';
-@import '7-pages/_login.css';
-/* más imports según necesites */
+/* Los archivos están en la misma carpeta styles, así que import con ruta relativa a esa carpeta */
+@import './settings/_variables.css';
+@import './generic/_reset.css';
+@import './elements/_base.css';
+@import './components/_button.css';
+@import './pages/_login.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

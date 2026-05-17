@@ -1,0 +1,16 @@
+@import '../settings/_variables.css';
+
+body {
+  font-family: var(--font-family, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
+  background-color: var(--gray-50, #f9fafb);
+  color: var(--gray-900, #111827);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}

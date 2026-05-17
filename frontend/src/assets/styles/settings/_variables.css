@@ -3,19 +3,17 @@
   --color-primary: #4f46e5;
   --color-primary-dark: #4338ca;
   --color-primary-light: #6366f1;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
   
   /* Colores por rol */
   --color-admin: #3b82f6;
   --color-hr: #8b5cf6;
   --color-employee: #10b981;
   
-  /* Colores semánticos */
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --color-info: #3b82f6;
-  
-  /* Escala de grises */
+  /* Grises */
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
@@ -56,21 +54,12 @@
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
-  --radius-full: 9999px;
   
   /* Sombras */
-  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  
-  /* Z-index */
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-modal: 1050;
-  --z-popover: 1060;
-  --z-tooltip: 1070;
   
   /* Transiciones */
   --transition-fast: 150ms ease-in-out;

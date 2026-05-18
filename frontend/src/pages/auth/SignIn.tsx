@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box, Button, Checkbox, FormControlLabel, Divider, FormLabel,
+  Box, Button, Checkbox, FormControlLabel, FormLabel,
   FormControl, Link, TextField, Typography, Card, Alert
 } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/login.png';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -94,16 +94,13 @@ const SignIn: React.FC = () => {
         <div className="login-image-col">
           <img src={logo} alt="Sistema de Asistencia" className="login-image" />
         </div>
-
         <div className="login-form-col">
           <Card className="login-mui-card" variant="outlined">
             <div className="login-mobile-logo">
               <img src={logo} alt="Logo" />
             </div>
-
             <h1 className="login-title">Sistema de Asistencia</h1>
             <p className="login-subtitle">Ingrese sus datos de inicio de sesión a continuación</p>
-
             <form onSubmit={handleSubmit} className="login-form" noValidate>
               <FormControl>
                 <FormLabel htmlFor="email">Correo Electrónico</FormLabel>
@@ -124,7 +121,6 @@ const SignIn: React.FC = () => {
                   onChange={handleEmailChange}
                 />
               </FormControl>
-
               <FormControl>
                 <FormLabel htmlFor="password">Contraseña</FormLabel>
                 <TextField
@@ -143,7 +139,6 @@ const SignIn: React.FC = () => {
                   onChange={handlePasswordChange}
                 />
               </FormControl>
-
               <FormControlLabel
                 control={
                   <Checkbox
@@ -154,7 +149,6 @@ const SignIn: React.FC = () => {
                 }
                 label="Recordarme"
               />
-
               <Button
                 type="submit"
                 fullWidth
@@ -164,13 +158,11 @@ const SignIn: React.FC = () => {
               >
                 {isSubmitting ? 'Ingresando...' : 'Iniciar Sesión'}
               </Button>
-
               {loginErrorMessage && (
                 <Alert severity="error" style={{ marginTop: '0.5rem' }}>
                   {loginErrorMessage}
                 </Alert>
               )}
-
               <Link
                 component="button"
                 type="button"
@@ -181,20 +173,6 @@ const SignIn: React.FC = () => {
                 ¿Has olvidado tu contraseña?
               </Link>
             </form>
-
-            <Divider sx={{ my: 2 }}>o continuar con</Divider>
-
-            <Typography sx={{ textAlign: 'center', mt: 2 }}>
-              ¿No tienes una cuenta?{' '}
-              <Link
-                href="#"
-                variant="body2"
-                className="login-register-link"
-                onClick={() => alert('Registrarse')}
-              >
-                Regístrate
-              </Link>
-            </Typography>
           </Card>
         </div>
       </div>

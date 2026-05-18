@@ -4,6 +4,7 @@
 @import './elements/_base.css';
 @import './components/_button.css';
 @import './pages/_login.css';
+@import './pages/_forgot-password.css';
 
 @tailwind base;
 @tailwind components;

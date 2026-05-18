@@ -5,8 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { AuthProvider } from './contexts/AuthContext';
 import { useAuth } from './hooks/useAuth';
 import SignIn from './pages/auth/SignIn';
+import ForgotPassword from './pages/auth/ForgotPassword';
 
-// Componentes placeholder para testing
+// Componentes placeholder para testing (puedes reemplazar luego)
 const AdminDashboard = () => <div>Admin Dashboard (test)</div>;
 const RrhhDashboard = () => <div>RRHH Dashboard (test)</div>;
 const EmployeeDashboard = () => <div>Employee Dashboard (test)</div>;
@@ -55,9 +56,19 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
+        <Routes>
+          {/* Ruta pública para recuperar contraseña */}
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          {/* El resto de la aplicación requiere autenticación */}
+          <Route
+            path="*"
+            element={
+              <AuthProvider>
+                <AppContent />
+              </AuthProvider>
+            }
+          />
+        </Routes>
       </BrowserRouter>
     </ThemeProvider>
   );

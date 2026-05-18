@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
+
+        /*
         const { data } = await supabase.auth.getSession();
         const sessionUser = data.session?.user;
         if (sessionUser) {
@@ -49,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             role,
           });
         }
+        */
       } catch (err) {
         console.error('Auth init error:', err);
       } finally {
@@ -57,6 +60,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
     initializeAuth();
 
+    // El listener de cambios de autenticación sigue activo (por si el usuario
+    // inicia sesión en otra pestaña o manualmente).
     const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
       const sessionUser = session?.user;
       if (!sessionUser) {

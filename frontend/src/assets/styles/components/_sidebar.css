@@ -1,0 +1,169 @@
+/* Sidebar base */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background-color: #fff;
+  border-right: 1px solid #e0e0e0;
+  transition: width 0.3s ease, transform 0.3s ease;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Escritorio: ancho normal */
+.sidebar.open {
+  width: 280px;
+}
+.sidebar.collapsed {
+  width: 70px;
+}
+
+/* Móvil: oculto por defecto, se desliza */
+@media (max-width: 899px) {
+  .sidebar {
+    width: 280px;
+    transform: translateX(-280px);
+  }
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+}
+
+/* Encabezado (botón + título) */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+.sidebar-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #008eb0;
+  margin-right: 12px;
+  padding: 8px;
+  border-radius: 8px;
+}
+.sidebar-toggle:hover {
+  background-color: #f0f7f9;
+}
+.sidebar-header-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #008eb0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+/* Ocultar título en modo colapsado (escritorio) */
+.sidebar.collapsed .sidebar-header-title {
+  display: none;
+}
+/* En móvil, el título siempre se muestra cuando el drawer está abierto */
+.sidebar.mobile-open .sidebar-header-title {
+  display: block;
+}
+
+/* Contenido interno */
+.sidebar-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-list {
+  flex: 1;
+  padding: 8px 12px;
+}
+.sidebar-list-item {
+  margin-bottom: 4px;
+}
+.sidebar-list-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 12px;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+}
+.sidebar-list-icon {
+  margin-right: 12px;
+  min-width: 24px;
+  color: #5f6368;
+}
+.sidebar.collapsed .sidebar-list-icon {
+  margin-right: 0;
+}
+.sidebar-list-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #3c4043;
+}
+.sidebar.collapsed .sidebar-list-text {
+  display: none;
+}
+/* Hover y activo */
+.sidebar-list-button:hover {
+  background-color: #f0f7f9;
+}
+.sidebar-list-button:hover .sidebar-list-icon {
+  color: #008eb0;
+}
+.sidebar-list-button.active {
+  background-color: #e0f2f5;
+}
+.sidebar-list-button.active .sidebar-list-icon {
+  color: #008eb0;
+}
+.sidebar-list-button.active .sidebar-list-text {
+  color: #008eb0;
+  font-weight: 600;
+}
+
+/* Footer */
+.sidebar-footer {
+  padding: 20px 24px;
+  border-top: 1px solid #edf2f7;
+}
+.sidebar.collapsed .sidebar-footer {
+  padding: 20px 0;
+}
+.sidebar-logout-button {
+  width: 100%;
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: 1px solid #dcdfe4;
+  background: transparent;
+  color: #5f6368;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.sidebar.collapsed .sidebar-logout-button span {
+  display: none;
+}
+.sidebar-logout-button:hover {
+  background-color: #fef2f2;
+  border-color: #e53e3e;
+  color: #e53e3e;
+}
+/* En móvil, cuando está abierto, el texto del botón sí se ve */
+.sidebar.mobile-open .sidebar-logout-button span {
+  display: inline;
+}

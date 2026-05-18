@@ -1,47 +1,38 @@
-.layout-admin {
+/* Layout principal */
+.admin-layout {
   display: flex;
   min-height: 100vh;
+  width: 100%;
 }
 
-.admin-sidebar {
-  width: 260px;
-  background: white;
-  border-right: 1px solid var(--gray-200);
-  padding: var(--spacing-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-8);
+/* Contenido principal */
+.admin-main {
+  flex-grow: 1;
+  background-color: #008eb0;  /* ← nuevo color */
+  min-height: 100vh;
+  padding: 24px;
+  transition: margin-left 0.3s ease;
+  margin-left: 280px;          /* Ancho del sidebar abierto */
 }
 
-.admin-sidebar nav {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
+/* Cuando el sidebar está colapsado (escritorio) */
+.admin-layout.sidebar-collapsed .admin-main {
+  margin-left: 70px;           /* Ancho del sidebar colapsado */
 }
 
-.admin-sidebar a {
-  padding: var(--spacing-2) var(--spacing-3);
-  border-radius: var(--radius-md);
-  color: var(--gray-700);
-}
-.admin-sidebar a:hover {
-  background: var(--gray-100);
-}
-.admin-sidebar a.active {
-  background: var(--color-primary-light);
-  color: white;
+/* En móvil, el contenido no tiene margen extra (sidebar superpuesto) */
+@media (max-width: 899px) {
+  .admin-main {
+    margin-left: 0 !important;
+    padding: 16px;
+  }
 }
 
-.logout-btn {
-  margin-top: auto;
-  padding: var(--spacing-2);
-  background: var(--gray-100);
-  border-radius: var(--radius-md);
-  color: var(--color-error);
+/* Ajuste para que el contenido no quede detrás del sidebar en escritorio */
+.sidebar {
+  z-index: 1100;               /* Asegura que el sidebar esté por encima del contenido */
 }
-
-.admin-content {
-  flex: 1;
-  padding: var(--spacing-6);
-  overflow-y: auto;
+.admin-main {
+  position: relative;
+  z-index: 1;
 }

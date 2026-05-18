@@ -1,55 +1,13 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AuthProvider } from './contexts/AuthContext';
-import { useAuth } from './hooks/useAuth';
-import SignIn from './pages/auth/SignIn';
-import ForgotPassword from './pages/auth/ForgotPassword';
-
-// Componentes placeholder para testing (puedes reemplazar luego)
-const AdminDashboard = () => <div>Admin Dashboard (test)</div>;
-const RrhhDashboard = () => <div>RRHH Dashboard (test)</div>;
-const EmployeeDashboard = () => <div>Employee Dashboard (test)</div>;
-
-// Layouts simplificados para test
-const AdminLayout = ({ onLogout }: { onLogout: () => void }) => (
-  <div>
-    <h1>Admin Layout</h1>
-    <button onClick={onLogout}>Cerrar sesión</button>
-    <AdminDashboard />
-  </div>
-);
-const RrhhLayout = ({ onLogout }: { onLogout: () => void }) => (
-  <div>
-    <h1>RRHH Layout</h1>
-    <button onClick={onLogout}>Cerrar sesión</button>
-    <RrhhDashboard />
-  </div>
-);
-const EmployeeLayout = ({ onLogout }: { onLogout: () => void }) => (
-  <div>
-    <h1>Employee Layout</h1>
-    <button onClick={onLogout}>Cerrar sesión</button>
-    <EmployeeDashboard />
-  </div>
-);
+import { AdminLayout } from './layouts/AdminLayout';
+// Importa el dashboard real
+import DashboardPage from './pages/admin/Dashboard.page';
 
 const theme = createTheme({ palette: { primary: { main: '#1976d2' } } });
-
-const AppContent = () => {
-  const { user, isAuthenticated, isLoading, logout } = useAuth();
-
-  if (isLoading) return <div>Cargando...</div>;
-  if (!isAuthenticated) return <SignIn />;
-
-  const role = user?.role;
-  if (!role) return <Navigate to="/login" />;
-
-  if (role === 'admin') return <AdminLayout onLogout={logout} />;
-  if (role === 'rrhh') return <RrhhLayout onLogout={logout} />;
-  return <EmployeeLayout onLogout={logout} />;
-};
+const mockLogout = () => console.log('Cerrar sesión');
 
 function App() {
   return (
@@ -57,17 +15,15 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          {/* Ruta pública para recuperar contraseña */}
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          {/* El resto de la aplicación requiere autenticación */}
-          <Route
-            path="*"
-            element={
-              <AuthProvider>
-                <AppContent />
-              </AuthProvider>
-            }
-          />
+          <Route path="/" element={<AdminLayout onLogout={mockLogout} />}>
+            {/* Cambia TestDashboard por DashboardPage */}
+            <Route index element={<DashboardPage />} />
+            <Route path="asistencia" element={<div>Asistencia</div>} />
+            <Route path="solicitudes" element={<div>Solicitudes</div>} />
+            <Route path="empleados" element={<div>Empleados</div>} />
+            <Route path="horarios" element={<div>Horarios</div>} />
+            <Route path="configuracion" element={<div>Configuración</div>} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

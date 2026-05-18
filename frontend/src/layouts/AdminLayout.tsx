@@ -1,26 +1,62 @@
-import React from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { useMediaQuery } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import PeopleIcon from '@mui/icons-material/People';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Sidebar } from '../components/common/Sidebar';
+
+const menuItems = [
+  { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
+  { text: 'Asistencia', icon: <EventNoteIcon />, path: '/asistencia' },
+  { text: 'Solicitudes', icon: <AssignmentIcon />, path: '/solicitudes' },
+  { text: 'Empleados', icon: <PeopleIcon />, path: '/empleados' },
+  { text: 'Horarios', icon: <ScheduleIcon />, path: '/horarios' },
+  { text: 'Configuración', icon: <SettingsIcon />, path: '/configuracion' },
+];
 
 interface AdminLayoutProps {
   onLogout: () => void;
 }
 
 export const AdminLayout: React.FC<AdminLayoutProps> = ({ onLogout }) => {
+  const isMobile = useMediaQuery('(max-width:899px)');
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleToggleSidebar = () => {
+    if (isMobile) {
+      setMobileOpen(!mobileOpen);
+    } else {
+      setCollapsed(!collapsed);
+    }
+  };
+
+  const layoutClass = `admin-layout ${collapsed ? 'sidebar-collapsed' : ''}`;
+
   return (
-    <div className="layout-admin">
-      <aside className="admin-sidebar">
-        <h2>Admin Panel</h2>
-        <nav>
-          <NavLink to="/">Dashboard</NavLink>
-          <NavLink to="/asistencia">Asistencia</NavLink>
-          <NavLink to="/solicitudes">Solicitudes</NavLink>
-          <NavLink to="/empleados">Empleados</NavLink>
-          <NavLink to="/horarios">Horarios</NavLink>
-          <NavLink to="/configuracion">Configuración</NavLink>
-        </nav>
-        <button onClick={onLogout} className="logout-btn">Cerrar sesión</button>
-      </aside>
-      <main className="admin-content">
+    <div className={layoutClass}>
+      {/* Botón flotante solo para móvil */}
+      {isMobile && (
+        <button className="mobile-menu-button" onClick={handleToggleSidebar}>
+          <MenuIcon />
+        </button>
+      )}
+
+      <Sidebar
+        isMobile={isMobile}
+        mobileOpen={mobileOpen}
+        collapsed={collapsed}
+        onToggle={handleToggleSidebar}
+        onLogout={onLogout}
+        menuItems={menuItems}
+        title="ADMINISTRADOR"
+      />
+      <main className="admin-main">
         <Outlet />
       </main>
     </div>

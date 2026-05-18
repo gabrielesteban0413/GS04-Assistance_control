@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -16,7 +15,15 @@ const menuItems = [
   { text: 'Solicitudes', icon: <AssignmentIcon />, path: '/solicitudes' },
   { text: 'Empleados', icon: <PeopleIcon />, path: '/empleados' },
   { text: 'Horarios', icon: <ScheduleIcon />, path: '/horarios' },
-  { text: 'Configuración', icon: <SettingsIcon />, path: '/configuracion' },
+  {
+    text: 'Configuración',
+    icon: <SettingsIcon />,
+    children: [
+      { text: 'General', icon: <SettingsIcon />, path: '/configuracion/general' },
+      { text: 'Privacidad', icon: <SettingsIcon />, path: '/configuracion/privacidad' },
+      { text: 'Seguridad', icon: <SettingsIcon />, path: '/configuracion/seguridad' },
+    ],
+  },
 ];
 
 interface AdminLayoutProps {
@@ -29,24 +36,15 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ onLogout }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleToggleSidebar = () => {
-    if (isMobile) {
-      setMobileOpen(!mobileOpen);
-    } else {
-      setCollapsed(!collapsed);
-    }
+    if (isMobile) setMobileOpen(!mobileOpen);
+    else setCollapsed(!collapsed);
   };
 
+  // Clase condicional para el layout principal
   const layoutClass = `admin-layout ${collapsed ? 'sidebar-collapsed' : ''}`;
 
   return (
     <div className={layoutClass}>
-      {/* Botón flotante solo para móvil */}
-      {isMobile && (
-        <button className="mobile-menu-button" onClick={handleToggleSidebar}>
-          <MenuIcon />
-        </button>
-      )}
-
       <Sidebar
         isMobile={isMobile}
         mobileOpen={mobileOpen}

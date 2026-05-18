@@ -1,4 +1,5 @@
-﻿import React from 'react';
+// src/components/admin/RecentAttendanceTable.tsx
+import React from 'react';
 import {
   Table,
   TableBody,

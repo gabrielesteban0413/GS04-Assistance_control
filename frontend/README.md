@@ -15,3 +15,14 @@ npx shadcn@latest add card table dialog form input date-picker dropdown-menu
 npx shadcn@latest add card table button dialog
 npm install recharts
 npx shadcn@latest add card table button
+npx shadcn@latest add button
+npx shadcn@latest add dialog input label select
+
+
+npm install lucide-react
+npx shadcn@latest add badge
+npx shadcn@latest add tabs card input label textarea button switch
+npx shadcn@latest add toast
+npx shadcn@latest add sonner
+npx shadcn@latest add card tabs input label textarea button switch sonner
+npm install lucide-react

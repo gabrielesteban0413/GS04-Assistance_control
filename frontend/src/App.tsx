@@ -1,10 +1,15 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { Toaster } from '@/components/ui/sonner';
 import { AdminLayout } from './layouts/AdminLayout';
-// Importa el dashboard real
 import DashboardPage from './pages/admin/Dashboard.page';
+import AsistenciaPage from './pages/admin/Asistencia.page';
+import SolicitudesPage from './pages/admin/Solicitudes.page';
+import EmpleadosPage from './pages/admin/Empleados.page';
+import HorariosPage from './pages/admin/Horarios.page';
+import ConfiguracionPage from './pages/admin/Configuracion.page';
 
 const theme = createTheme({ palette: { primary: { main: '#1976d2' } } });
 const mockLogout = () => console.log('Cerrar sesión');
@@ -16,16 +21,21 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AdminLayout onLogout={mockLogout} />}>
-            {/* Cambia TestDashboard por DashboardPage */}
             <Route index element={<DashboardPage />} />
-            <Route path="asistencia" element={<div>Asistencia</div>} />
-            <Route path="solicitudes" element={<div>Solicitudes</div>} />
-            <Route path="empleados" element={<div>Empleados</div>} />
-            <Route path="horarios" element={<div>Horarios</div>} />
-            <Route path="configuracion" element={<div>Configuración</div>} />
+            <Route path="asistencia" element={<AsistenciaPage />} />
+            <Route path="solicitudes" element={<SolicitudesPage />} />
+            <Route path="empleados" element={<EmpleadosPage />} />
+            <Route path="horarios" element={<HorariosPage />} />
+            <Route path="configuracion">
+              <Route index element={<Navigate to="/configuracion/general" replace />} />
+              <Route path="general" element={<ConfiguracionPage />} />
+              <Route path="privacidad" element={<ConfiguracionPage />} />
+              <Route path="seguridad" element={<ConfiguracionPage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
+      <Toaster richColors position="top-center" />
     </ThemeProvider>
   );
 }

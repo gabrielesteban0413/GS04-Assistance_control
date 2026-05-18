@@ -1,39 +1,53 @@
 import React from 'react';
-import { AttendanceRecord } from '../../services/admin.service';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { AttendanceRecordDetail } from '@/services/admin.service';
 
-const statusClassMap = {
-  Puntual: 'status-puntual',
-  Retardo: 'status-retardo',
-  Ausente: 'status-ausente',
-  Permiso: 'status-permiso',
+interface AttendanceTableProps {
+  records: AttendanceRecordDetail[];
+}
+
+const statusColor: Record<string, string> = {
+  Completo: 'text-green-600',
+  Retardo: 'text-yellow-600',
+  Falta: 'text-red-600',
+  Permiso: 'text-blue-600',
 };
 
-const AttendanceTable: React.FC<{ records: AttendanceRecord[] }> = ({ records }) => {
+const AttendanceTable: React.FC<AttendanceTableProps> = ({ records }) => {
   return (
-    <div className="attendance-table-container">
-      <table className="attendance-table">
-        <thead>
-          <tr>
-            <th>EMPLEADO</th>
-            <th>ENTRADA</th>
-            <th>SALIDA</th>
-            <th>TURNO</th>
-            <th>ESTADO</th>
-          </tr>
-        </thead>
-        <tbody>
-          {records.map(record => (
-            <tr key={record.id}>
-              <td>{record.employeeName}</td>
-              <td>{record.entryTime || '—'}</td>
-              <td>{record.exitTime || '—'}</td>
-              <td>{record.shift}</td>
-              <td className={statusClassMap[record.status]}>{record.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>EMPLEADO</TableHead>
+          <TableHead>FECHA</TableHead>
+          <TableHead>ENTRADA</TableHead>
+          <TableHead>SALIDA</TableHead>
+          <TableHead>HORAS</TableHead>
+          <TableHead>ESTADO</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {records.map((record) => (
+          <TableRow key={record.id}>
+            <TableCell className="font-medium">{record.employeeName}</TableCell>
+            <TableCell>{record.date}</TableCell>
+            <TableCell>{record.entryTime}</TableCell>
+            <TableCell>{record.exitTime}</TableCell>
+            <TableCell>{record.hoursWorked}</TableCell>
+            <TableCell className={statusColor[record.status]}>
+              {record.status}
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
 

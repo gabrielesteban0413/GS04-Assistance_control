@@ -1,0 +1,32 @@
+/* Contenedor del gráfico (layout) */
+.activity-chart {
+  grid-column: span 4;
+}
+
+.activity-chart__content {
+  padding-left: 0.5rem;
+}
+
+
+.activity-chart__content .recharts-responsive-container {
+  height: 300px !important;
+}
+
+
+.line-asistencias .recharts-curve {
+  stroke: var(--color-primary);
+  stroke-width: var(--chart-line-width);
+}
+
+
+.line-ausencias .recharts-curve {
+  stroke: var(--color-error);
+  stroke-width: var(--chart-line-width);
+}
+
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--gray-300);
+  stroke-dasharray: var(--chart-grid-dasharray);
+}

@@ -16,6 +16,7 @@ import RecentAttendanceTable from '@/components/admin/RecentAttendanceTable';
 import RecentActivityList from '@/components/admin/RecentActivityList';
 import PendingRequestsList from '@/components/admin/PendingRequestsList';
 import ActivityChart from '@/components/admin/ActivityChart';
+import RetirementPieChart from '@/components/admin/RetirementPieChart';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const DashboardPage: React.FC = () => {
@@ -49,23 +50,16 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-6 p-6">
+
       <StatsGrid stats={stats} />
 
-      {/* Últimas Marcaciones: ocupa todo el ancho */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Últimas Marcaciones</CardTitle>
-          <p className="text-sm text-muted-foreground">Registros de hoy en tiempo real</p>
-        </CardHeader>
-        <CardContent>
-          <RecentAttendanceTable records={attendance} />
-        </CardContent>
-      </Card>
 
-      {/* Tres columnas: gráfico, actividad reciente, solicitudes pendientes */}
-      <div className="grid gap-6 md:grid-cols-3">
-        <ActivityChart data={chartData} />
 
+
+      <ActivityChart data={chartData} />
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <RetirementPieChart />
         <Card>
           <CardHeader>
             <CardTitle>Actividad Reciente</CardTitle>
@@ -74,7 +68,6 @@ const DashboardPage: React.FC = () => {
             <RecentActivityList activities={activities} />
           </CardContent>
         </Card>
-
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -87,7 +80,23 @@ const DashboardPage: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+
+
+            <Card>
+        <CardHeader>
+          <CardTitle>Últimas Marcaciones</CardTitle>
+          <p className="text-sm text-muted-foreground">Registros de hoy en tiempo real</p>
+        </CardHeader>
+        <CardContent>
+          <RecentAttendanceTable records={attendance} />
+        </CardContent>
+      </Card>
+
+
+
     </div>
+
+    
   );
 };
 

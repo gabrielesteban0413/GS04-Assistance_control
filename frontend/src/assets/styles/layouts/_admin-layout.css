@@ -5,34 +5,51 @@
   width: 100%;
 }
 
-/* Contenido principal */
+/* Botón móvil */
+.mobile-menu-button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1300;
+  background-color: #008eb0;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+
+
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
 .admin-main {
   flex-grow: 1;
-  background-color: #008eb0;  /* ← nuevo color */
+  background-color: #008eb0;
   min-height: 100vh;
   padding: 24px;
   transition: margin-left 0.3s ease;
-  margin-left: 280px;          /* Ancho del sidebar abierto */
+  margin-left: 280px;
 }
 
-/* Cuando el sidebar está colapsado (escritorio) */
 .admin-layout.sidebar-collapsed .admin-main {
-  margin-left: 70px;           /* Ancho del sidebar colapsado */
+  margin-left: 70px;
 }
 
-/* En móvil, el contenido no tiene margen extra (sidebar superpuesto) */
 @media (max-width: 899px) {
   .admin-main {
     margin-left: 0 !important;
     padding: 16px;
   }
-}
-
-/* Ajuste para que el contenido no quede detrás del sidebar en escritorio */
-.sidebar {
-  z-index: 1100;               /* Asegura que el sidebar esté por encima del contenido */
-}
-.admin-main {
-  position: relative;
-  z-index: 1;
 }

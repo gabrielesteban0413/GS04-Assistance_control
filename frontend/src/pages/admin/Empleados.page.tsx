@@ -20,16 +20,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
-  Employee,
-  EmployeeInput,
   getEmployees,
   createEmployee,
   updateEmployee,
   deleteEmployee,
 } from '@/services/admin.service';
+import { Employee, EmployeeInput } from '@/types/employee';
 import EmployeesTable from '@/components/admin/EmployeesTable';
 import { exportToCSV } from '@/utils/exportUtils';
-import { useToast } from '@/hooks/use-toast'; // si tienes toasts de shadcn/ui, sino usa alertas simples
+import logo from '@/assets/images/logo_blanco.png';
 
 const EmpleadosPage: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -134,20 +133,27 @@ const EmpleadosPage: React.FC = () => {
   return (
     <div className="space-y-6 p-6">
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle>Gestión de Empleados</CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Administra la información de los empleados
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <Button onClick={handleExportCSV} variant="outline">
-              Exportar CSV
-            </Button>
-            <Button onClick={openCreateDialog}>
-              <Plus className="mr-2 h-4 w-4" /> Nuevo Empleado
-            </Button>
+        <CardHeader>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Logo izquierda */}
+            <div className="flex-shrink-0">
+              <img src={logo} alt="Logo" className="h-12 w-auto" />
+            </div>
+
+            {/* Título centrado */}
+            <div className="flex-1 text-center">
+              <CardTitle className="text-xl md:text-2xl">Gestión de Empleados</CardTitle>
+            </div>
+
+            {/* Botones a la derecha */}
+            <div className="flex gap-2">
+              <Button onClick={handleExportCSV} variant="outline">
+                Exportar CSV
+              </Button>
+              <Button onClick={openCreateDialog}>
+                <Plus className="mr-2 h-4 w-4" /> Nuevo Empleado
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>
@@ -228,7 +234,7 @@ const EmpleadosPage: React.FC = () => {
               Cancelar
             </Button>
             <Button onClick={handleSave} disabled={saving}>
-              {saving ? 'Guardando...' : isEditing ? 'Actualizar' : 'Crear'}
+              {saving ? 'Guardando...' : (isEditing ? 'Actualizar' : 'Crear')}
             </Button>
           </DialogFooter>
         </DialogContent>

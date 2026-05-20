@@ -1,31 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 import { LeaveRequest, getLeaveRequests } from '@/services/admin.service';
 import RequestsTable from '@/components/admin/RequestsTable';
 import { exportToCSV } from '@/utils/exportUtils';
+import logo from '@/assets/images/logo_blanco.png';
 
 const SolicitudesPage: React.FC = () => {
   const [requests, setRequests] = useState<LeaveRequest[]>([]);
+  const [filteredRequests, setFilteredRequests] = useState<LeaveRequest[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRequests = async () => {
       const data = await getLeaveRequests();
       setRequests(data);
+      setFilteredRequests(data);
       setLoading(false);
     };
     fetchRequests();
   }, []);
 
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setFilteredRequests(requests);
+      return;
+    }
+    const lowerSearch = searchTerm.toLowerCase();
+    const filtered = requests.filter(req =>
+      req.employeeName.toLowerCase().includes(lowerSearch) ||
+      req.type.toLowerCase().includes(lowerSearch) ||
+      req.status.toLowerCase().includes(lowerSearch) ||
+      req.reason.toLowerCase().includes(lowerSearch)
+    );
+    setFilteredRequests(filtered);
+  }, [searchTerm, requests]);
+
   const handleApprove = (id: string) => {
-    // Simular aprobación (actualizar estado)
     setRequests(prev =>
       prev.map(req =>
         req.id === id ? { ...req, status: 'Aprobada' as const } : req
       )
     );
-    // Aquí llamarías a una API real
     console.log(`Aprobada solicitud ${id}`);
   };
 
@@ -39,7 +58,7 @@ const SolicitudesPage: React.FC = () => {
   };
 
   const handleExportCSV = () => {
-    exportToCSV(requests, `solicitudes_${new Date().toISOString().slice(0, 19)}`);
+    exportToCSV(filteredRequests, `solicitudes_${new Date().toISOString().slice(0, 19)}`);
   };
 
   if (loading) {
@@ -49,20 +68,34 @@ const SolicitudesPage: React.FC = () => {
   return (
     <div className="space-y-6 p-6">
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle>Gestión de Solicitudes</CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Permisos, vacaciones y cambios de turno de los empleados
-            </p>
+        <CardHeader>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex-shrink-0">
+              <img src={logo} alt="Logo" className="h-12 w-auto" />
+            </div>
+            <div className="flex-1 text-center">
+              <CardTitle className="text-xl md:text-2xl">Gestión de Solicitudes</CardTitle>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Buscar empleado, tipo, estado, motivo..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-8 w-64"
+                />
+              </div>
+              <Button onClick={handleExportCSV} variant="outline">
+                Exportar a CSV
+              </Button>
+            </div>
           </div>
-          <Button onClick={handleExportCSV} variant="outline">
-            Exportar a CSV
-          </Button>
         </CardHeader>
         <CardContent>
           <RequestsTable
-            requests={requests}
+            requests={filteredRequests}
             onApprove={handleApprove}
             onReject={handleReject}
           />

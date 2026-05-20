@@ -15,15 +15,9 @@ const menuItems = [
   { text: 'Solicitudes', icon: <AssignmentIcon />, path: '/solicitudes' },
   { text: 'Empleados', icon: <PeopleIcon />, path: '/empleados' },
   { text: 'Horarios', icon: <ScheduleIcon />, path: '/horarios' },
-  {
-    text: 'Configuración',
-    icon: <SettingsIcon />,
-    children: [
-      { text: 'General', icon: <SettingsIcon />, path: '/configuracion/general' },
-      { text: 'Privacidad', icon: <SettingsIcon />, path: '/configuracion/privacidad' },
-      { text: 'Seguridad', icon: <SettingsIcon />, path: '/configuracion/seguridad' },
-    ],
-  },
+  { text: 'Configuración',icon: <SettingsIcon />, path: '/configuracion' },
+    
+
 ];
 
 interface AdminLayoutProps {

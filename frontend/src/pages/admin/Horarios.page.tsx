@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Edit } from 'lucide-react';
 import { listHorarios, Horario } from '@/services/horario.service';
+import logo from '@/assets/images/logo_blanco.png';
 
 const HorariosPage: React.FC = () => {
   const [horarios, setHorarios] = useState<Horario[]>([]);
@@ -26,10 +27,23 @@ const HorariosPage: React.FC = () => {
     <div className="space-y-6 p-6">
       <Card>
         <CardHeader>
-          <CardTitle>Horarios y Turnos</CardTitle>
-          <p className="text-sm text-muted-foreground">
-            Configuración de horarios por departamento
-          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Logo izquierda */}
+            <div className="flex-shrink-0">
+              <img src={logo} alt="Logo" className="h-12 w-auto" />
+            </div>
+
+            {/* Título centrado */}
+            <div className="flex-1 text-center">
+              <CardTitle className="text-xl md:text-2xl">Horarios y Turnos</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Configuración de horarios por departamento
+              </p>
+            </div>
+
+            {/* Espacio a la derecha (para mantener simetría) */}
+            <div className="w-12" /> {/* Ajusta el ancho si lo deseas */}
+          </div>
         </CardHeader>
         <CardContent>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -166,9 +166,9 @@ const EmpleadosPage: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Diálogo de creación/edición */}
+      {/* Diálogo de creación/edición con fondo blanco */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-[500px] bg-white rounded-lg shadow-lg">
           <DialogHeader>
             <DialogTitle>{isEditing ? 'Editar empleado' : 'Nuevo empleado'}</DialogTitle>
             <DialogDescription>

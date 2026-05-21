@@ -3,13 +3,19 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Toaster } from '@/components/ui/sonner';
-import { RrhhLayout } from './layouts/RrhhLayout';
+import { AdminLayout } from './layouts/AdminLayout';
+import DashboardPage from './pages/admin/Dashboard.page';
+import AsistenciaPage from './pages/admin/Asistencia.page';
+import SolicitudesPage from './pages/admin/Solicitudes.page';
+import EmpleadosPage from './pages/admin/Empleados.page';
+import HorariosPage from './pages/admin/Horarios.page';
+import ConfiguracionPage from './pages/admin/Configuracion.page';
 
-// Páginas de RRHH
-import RrhhDashboard from './pages/rrhh/Dashboard.page';
-import RrhhEmpleados from './pages/rrhh/Empleados.page';
-import RrhhSolicitudes from './pages/rrhh/Solicitudes.page';
-import RrhhReportes from './pages/rrhh/Reportes.page';
+
+import SignIn from './pages/auth/SignIn';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword'; // Comentado si no existe
+
 
 const theme = createTheme({ palette: { primary: { main: '#1976d2' } } });
 const mockLogout = () => console.log('Cerrar sesión');
@@ -20,12 +26,18 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<RrhhLayout onLogout={mockLogout} />}>
-            <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="dashboard" element={<RrhhDashboard />} />
-            <Route path="empleados" element={<RrhhEmpleados />} />
-            <Route path="solicitudes" element={<RrhhSolicitudes />} />
-            <Route path="reportes" element={<RrhhReportes />} />
+          <Route path="/" element={<AdminLayout onLogout={mockLogout} />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="asistencia" element={<AsistenciaPage />} />
+            <Route path="solicitudes" element={<SolicitudesPage />} />
+            <Route path="empleados" element={<EmpleadosPage />} />
+            <Route path="horarios" element={<HorariosPage />} />
+            <Route path="configuracion">
+              <Route index element={<Navigate to="/configuracion/general" replace />} />
+              <Route path="general" element={<ConfiguracionPage />} />
+              <Route path="privacidad" element={<ConfiguracionPage />} />
+              <Route path="seguridad" element={<ConfiguracionPage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
@@ -34,4 +46,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

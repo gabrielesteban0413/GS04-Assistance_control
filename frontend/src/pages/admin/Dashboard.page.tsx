@@ -66,7 +66,7 @@ const DashboardPage: React.FC = () => {
         <div className="admin-card">
           <div className="admin-card-header admin-card-header-row">
             <h3 className="admin-card-title">Actividad Reciente</h3>
-            <Link to="/asistencia" className="admin-link-icon">
+            <Link to="/admin/asistencia" className="admin-link-icon">
               <span className="admin-link-text">Ver todas</span>
               <ChevronRight className="admin-icon-sm" />
             </Link>
@@ -80,7 +80,7 @@ const DashboardPage: React.FC = () => {
         <div className="admin-card">
           <div className="admin-card-header admin-card-header-row">
             <h3 className="admin-card-title">Solicitudes Pendientes</h3>
-            <Link to="/solicitudes" className="admin-link-icon">
+            <Link to="/admin/solicitudes" className="admin-link-icon">
               <span className="admin-link-text">Ver todas</span>
               <ChevronRight className="admin-icon-sm" />
             </Link>
@@ -98,7 +98,7 @@ const DashboardPage: React.FC = () => {
             <h3 className="admin-card-title">Últimas Marcaciones</h3>
             <p className="admin-card-subtitle">Registros de hoy en tiempo real</p>
           </div>
-          <Link to="/asistencia" className="admin-btn-outline admin-btn-sm">
+          <Link to="/admin/asistencia" className="admin-btn-outline admin-btn-sm">
             Ver historial completo
           </Link>
         </div>

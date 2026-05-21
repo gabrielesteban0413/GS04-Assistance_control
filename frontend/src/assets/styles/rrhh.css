@@ -1,0 +1,494 @@
+/* ============================================
+   rrhh.css - Estilos unificados para Recursos Humanos
+   ============================================ */
+
+/* Variables */
+:root {
+  --rrhh-primary: #008eb0;
+  --rrhh-primary-dark: #006c8a;
+  --rrhh-success: #16a34a;
+  --rrhh-warning: #ca8a04;
+  --rrhh-danger: #dc2626;
+  --rrhh-info: #2563eb;
+  --rrhh-gray-bg: #f9fafb;
+  --rrhh-border: #e5e7eb;
+  --rrhh-text: #1f2937;
+  --rrhh-text-muted: #6b7280;
+  --rrhh-card-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Contenedor principal */
+.rrhh-page-container {
+  padding: 1.5rem;
+  min-height: 100vh;
+
+}
+
+/* Tarjeta genérica */
+.rrhh-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid var(--rrhh-border);
+  box-shadow: var(--rrhh-card-shadow);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.rrhh-card-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--rrhh-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.rrhh-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--rrhh-text);
+  margin: 0;
+}
+.rrhh-card-content {
+  padding: 1.5rem;
+}
+
+/* Stats Grid (dashboard) */
+.rrhh-stats-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+  .rrhh-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .rrhh-stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.rrhh-stat-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid var(--rrhh-border);
+  box-shadow: var(--rrhh-card-shadow);
+  padding: 1rem;
+}
+.rrhh-stat-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--rrhh-text-muted);
+  margin-bottom: 0.5rem;
+}
+.rrhh-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--rrhh-text);
+  margin-bottom: 0.25rem;
+}
+.rrhh-stat-subtitle {
+  font-size: 0.75rem;
+  color: var(--rrhh-text-muted);
+}
+.rrhh-stat-trend {
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+.rrhh-stat-trend--up {
+  color: var(--rrhh-success);
+}
+.rrhh-stat-trend--down {
+  color: var(--rrhh-danger);
+}
+
+/* Quick access cards (dashboard) */
+.rrhh-quick-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+  .rrhh-quick-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.rrhh-quick-card {
+  background: white;
+  border: 1px solid var(--rrhh-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: block;
+}
+.rrhh-quick-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-color: var(--rrhh-primary);
+}
+.rrhh-quick-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.rrhh-quick-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--rrhh-text);
+}
+.rrhh-quick-desc {
+  font-size: 0.75rem;
+  color: var(--rrhh-text-muted);
+  margin-top: 0.25rem;
+}
+
+/* Two columns layout (dashboard) */
+.rrhh-two-columns {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+  .rrhh-two-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Charts */
+.rrhh-chart-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid var(--rrhh-border);
+  box-shadow: var(--rrhh-card-shadow);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.rrhh-chart-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+.rrhh-chart-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--rrhh-text);
+  margin: 0;
+}
+.rrhh-chart-content {
+  padding: 1rem;
+}
+.rrhh-chart-line--contrataciones {
+  stroke: #10b981 !important;
+  stroke-width: 2px;
+}
+.rrhh-chart-line--rotacion {
+  stroke: #f59e0b !important;
+  stroke-width: 2px;
+}
+
+/* Dept progress */
+.rrhh-dept-progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.rrhh-dept-progress {
+  margin-bottom: 0;
+}
+.rrhh-dept-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+.rrhh-dept-name {
+  font-weight: 500;
+}
+.rrhh-dept-percent {
+  color: var(--rrhh-text-muted);
+}
+.rrhh-progress-bar {
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 0.5rem;
+  overflow: hidden;
+}
+.rrhh-progress-fill {
+  background-color: var(--rrhh-primary);
+  height: 100%;
+  border-radius: 9999px;
+  width: 0%;
+}
+
+/* Horarios grid */
+.rrhh-horarios-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .rrhh-horarios-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.rrhh-horario-card {
+  border: 1px solid var(--rrhh-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.rrhh-horario-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.rrhh-horario-detail {
+  font-size: 0.875rem;
+  color: var(--rrhh-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+/* Activity list */
+.rrhh-activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.rrhh-activity-item {
+  border-bottom: 1px solid var(--rrhh-border);
+  padding: 0.75rem 0;
+}
+.rrhh-activity-item:last-child {
+  border-bottom: none;
+}
+.rrhh-activity-description {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.rrhh-activity-time {
+  font-size: 0.75rem;
+  color: var(--rrhh-text-muted);
+}
+.rrhh-link {
+  font-size: 0.875rem;
+  color: var(--rrhh-primary);
+  text-decoration: none;
+}
+.rrhh-link:hover {
+  text-decoration: underline;
+}
+
+/* Search and filters (solicitudes) */
+.rrhh-search-wrapper {
+  margin-bottom: 1.5rem;
+}
+.rrhh-search-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem;
+  border: 1px solid var(--rrhh-border);
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+}
+.rrhh-search-input:focus {
+  outline: none;
+  border-color: var(--rrhh-primary);
+  box-shadow: 0 0 0 2px rgba(0, 142, 176, 0.1);
+}
+
+/* Table styles (reutilizable) */
+.rrhh-table-wrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+.rrhh-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.rrhh-table th,
+.rrhh-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--rrhh-border);
+}
+.rrhh-table th {
+  background-color: var(--rrhh-gray-bg);
+  font-weight: 600;
+}
+.rrhh-table tr:hover {
+  background-color: #f9fafb;
+}
+.rrhh-table-empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--rrhh-text-muted);
+}
+.rrhh-table-cell-employee {
+  font-weight: 500;
+}
+.rrhh-table-cell-reason {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rrhh-table-actions {
+  white-space: nowrap;
+}
+
+/* Status badges */
+.rrhh-status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.rrhh-status-activo,
+.rrhh-status-aprobada {
+  background-color: #dcfce7;
+  color: #166534;
+}
+.rrhh-status-inactivo,
+.rrhh-status-rechazada {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+.rrhh-status-pendiente {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* Action buttons */
+.rrhh-actions-group {
+  display: flex;
+  gap: 0.5rem;
+}
+.rrhh-btn-approve,
+.rrhh-btn-reject {
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.rrhh-btn-approve {
+  background-color: var(--rrhh-success);
+  color: white;
+}
+.rrhh-btn-approve:hover {
+  background-color: #15803d;
+}
+.rrhh-btn-reject {
+  background-color: var(--rrhh-danger);
+  color: white;
+}
+.rrhh-btn-reject:hover {
+  background-color: #b91c1c;
+}
+.rrhh-btn-approve:disabled,
+.rrhh-btn-reject:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Botón primario (reportes) */
+.rrhh-btn-primary {
+  background-color: var(--rrhh-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.rrhh-btn-primary:hover {
+  background-color: var(--rrhh-primary-dark);
+}
+
+/* Reportes grid */
+.rrhh-reportes-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .rrhh-reportes-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.rrhh-reporte-card {
+  border: 1px solid var(--rrhh-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: white;
+  transition: box-shadow 0.2s;
+}
+.rrhh-reporte-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.rrhh-reporte-icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--rrhh-primary);
+  margin-bottom: 1rem;
+}
+.rrhh-reporte-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.rrhh-reporte-description {
+  font-size: 0.875rem;
+  color: var(--rrhh-text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* Badge contador pendientes */
+.rrhh-badge-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+/* Volver link */
+.rrhh-back-link {
+  margin-bottom: 1rem;
+}
+
+/* Refresh button */
+.rrhh-refresh-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+.rrhh-refresh-btn {
+  background-color: transparent;
+  border: 1px solid var(--rrhh-border);
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.rrhh-refresh-btn:hover {
+  background-color: var(--rrhh-gray-bg);
+}
+
+/* Loading */
+.rrhh-page-loading {
+  padding: 2rem;
+  text-align: center;
+  color: var(--rrhh-text-muted);
+}

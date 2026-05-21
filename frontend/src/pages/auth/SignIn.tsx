@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Box, Button, Checkbox, FormControlLabel, FormLabel,
-  FormControl, Link, TextField, Typography, Card, Alert
-} from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
 import logo from '../../assets/images/login.png';
+import '../../assets/styles/auth.css';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -89,24 +86,22 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <div className="login-image-col">
-          <img src={logo} alt="Sistema de Asistencia" className="login-image" />
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-image-col">
+          <img src={logo} alt="Sistema de Asistencia" className="auth-image" />
         </div>
-        <div className="login-form-col">
-          <Card className="login-mui-card" variant="outlined">
-            <div className="login-mobile-logo">
+        <div className="auth-form-col">
+          <div className="auth-mui-card">
+            <div className="auth-mobile-logo">
               <img src={logo} alt="Logo" />
             </div>
-            <h1 className="login-title">Sistema de Asistencia</h1>
-            <p className="login-subtitle">Ingrese sus datos de inicio de sesión a continuación</p>
-            <form onSubmit={handleSubmit} className="login-form" noValidate>
-              <FormControl>
-                <FormLabel htmlFor="email">Correo Electrónico</FormLabel>
-                <TextField
-                  error={emailError}
-                  helperText={emailErrorMessage}
+            <h1 className="auth-title">Sistema de Asistencia</h1>
+            <p className="auth-subtitle">Ingrese sus datos de inicio de sesión a continuación</p>
+            <form onSubmit={handleSubmit} className="auth-form" noValidate>
+              <div className="auth-form-control">
+                <label htmlFor="email" className="auth-label">Correo Electrónico</label>
+                <input
                   id="email"
                   type="email"
                   name="email"
@@ -114,66 +109,64 @@ const SignIn: React.FC = () => {
                   autoComplete="email"
                   autoFocus
                   required
-                  fullWidth
-                  variant="outlined"
-                  size="medium"
+                  className={`auth-input ${emailError ? 'auth-input-error' : ''}`}
                   value={email}
                   onChange={handleEmailChange}
                 />
-              </FormControl>
-              <FormControl>
-                <FormLabel htmlFor="password">Contraseña</FormLabel>
-                <TextField
-                  error={passwordError}
-                  helperText={passwordErrorMessage}
+                {emailError && <span className="auth-error-text">{emailErrorMessage}</span>}
+              </div>
+
+              <div className="auth-form-control">
+                <label htmlFor="password" className="auth-label">Contraseña</label>
+                <input
+                  id="password"
                   name="password"
                   placeholder="••••••"
                   type="password"
-                  id="password"
                   autoComplete="current-password"
                   required
-                  fullWidth
-                  variant="outlined"
-                  size="medium"
+                  className={`auth-input ${passwordError ? 'auth-input-error' : ''}`}
                   value={password}
                   onChange={handlePasswordChange}
                 />
-              </FormControl>
-              <FormControlLabel
-                control={
-                  <Checkbox
+                {passwordError && <span className="auth-error-text">{passwordErrorMessage}</span>}
+              </div>
+
+              <div className="auth-checkbox-wrapper">
+                <label className="auth-checkbox-label">
+                  <input
+                    type="checkbox"
                     checked={remember}
                     onChange={(e) => setRemember(e.target.checked)}
-                    color="primary"
+                    className="auth-checkbox"
                   />
-                }
-                label="Recordarme"
-              />
-              <Button
+                  Recordarme
+                </label>
+              </div>
+
+              <button
                 type="submit"
-                fullWidth
-                variant="contained"
+                className="auth-submit-btn"
                 disabled={isSubmitting}
-                className="login-submit-btn"
               >
                 {isSubmitting ? 'Ingresando...' : 'Iniciar Sesión'}
-              </Button>
+              </button>
+
               {loginErrorMessage && (
-                <Alert severity="error" style={{ marginTop: '0.5rem' }}>
+                <div className="auth-alert-error">
                   {loginErrorMessage}
-                </Alert>
+                </div>
               )}
-              <Link
-                component="button"
+
+              <button
                 type="button"
                 onClick={() => navigate('/forgot-password')}
-                className="login-forgot-link"
-                variant="body2"
+                className="auth-forgot-link"
               >
                 ¿Has olvidado tu contraseña?
-              </Link>
+              </button>
             </form>
-          </Card>
+          </div>
         </div>
       </div>
     </div>

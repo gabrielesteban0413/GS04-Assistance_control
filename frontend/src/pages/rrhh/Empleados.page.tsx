@@ -41,7 +41,7 @@ const EmpleadosPage: React.FC = () => {
           <EmployeesTable
             employees={employees}
             loading={loading}
-            onEdit={() => {}}      // Puedes implementar edición si lo deseas
+            onEdit={() => {}}      
             onDelete={() => {}}
           />
         </CardContent>

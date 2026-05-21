@@ -1,23 +1,26 @@
 import React from 'react';
+import '../../assets/styles/rrhh.css';
 
 interface DeptProgressProps {
-  name: string;
-  percentage: number;
+  data: { name: string; porcentaje: number }[];
 }
 
-export const DeptProgress: React.FC<DeptProgressProps> = ({ name, percentage }) => {
+const DeptProgress: React.FC<DeptProgressProps> = ({ data }) => {
   return (
-    <div className="mb-3">
-      <div className="flex justify-between text-sm mb-1">
-        <span>{name}</span>
-        <span>{percentage}%</span>
-      </div>
-      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-[#008eb0] rounded-full"
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
+    <div className="rrhh-dept-progress-list">
+      {data.map((dept, idx) => (
+        <div key={idx} className="rrhh-dept-progress">
+          <div className="rrhh-dept-header">
+            <span className="rrhh-dept-name">{dept.name}</span>
+            <span className="rrhh-dept-percent">{dept.porcentaje}%</span>
+          </div>
+          <div className="rrhh-progress-bar">
+            <div className="rrhh-progress-fill" style={{ width: `${dept.porcentaje}%` }}></div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
+
+export default DeptProgress;

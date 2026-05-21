@@ -4,7 +4,7 @@ import App from './App';
 import './assets/styles/main.css';
 import './assets/styles/layouts/_admin-layout.css';
 import './assets/styles/components/_sidebar.css';
-import './assets/styles/pages/_dashboard.css'; 
+
 import '@fontsource-variable/geist';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

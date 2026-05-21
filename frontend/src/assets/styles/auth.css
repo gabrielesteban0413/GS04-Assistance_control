@@ -1,0 +1,223 @@
+/* ============================================
+   auth.css - Estilos para pantallas de autenticación
+   ============================================ */
+
+/* Variables específicas de auth (opcional, se pueden usar las globales) */
+:root {
+  --auth-primary: #008eb0;
+  --auth-primary-dark: #006c8a;
+  --auth-error: #dc2626;
+  --auth-border: #e5e7eb;
+  --auth-text: #1f2937;
+  --auth-text-muted: #6b7280;
+  --auth-bg-light: #f9fafb;
+}
+
+/* Contenedor principal */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  padding: 1rem;
+}
+
+/* Tarjeta de dos columnas */
+.auth-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1000px;
+  width: 100%;
+  background-color: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+}
+
+/* Columna de la imagen */
+.auth-image-col {
+  background-color: #f0fdf4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.auth-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Columna del formulario */
+.auth-form-col {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-mui-card {
+  width: 100%;
+}
+
+/* Logo móvil (oculto en desktop) */
+.auth-mobile-logo {
+  display: none;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.auth-mobile-logo img {
+  height: 48px;
+  width: auto;
+}
+
+.auth-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--auth-text);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.auth-subtitle {
+  font-size: 0.875rem;
+  color: var(--auth-text-muted);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.auth-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--auth-text);
+}
+.auth-input {
+  padding: 0.5rem;
+  border: 1px solid var(--auth-border);
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.auth-input:focus {
+  outline: none;
+  border-color: var(--auth-primary);
+  box-shadow: 0 0 0 2px rgba(0, 142, 176, 0.1);
+}
+.auth-input-error {
+  border-color: var(--auth-error);
+}
+.auth-input-error:focus {
+  border-color: var(--auth-error);
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
+.auth-error-text {
+  font-size: 0.75rem;
+  color: var(--auth-error);
+}
+
+.auth-checkbox-wrapper {
+  margin-top: 0.25rem;
+}
+.auth-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--auth-text);
+  cursor: pointer;
+}
+.auth-checkbox {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.auth-submit-btn {
+  background-color: var(--auth-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+.auth-submit-btn:hover {
+  background-color: var(--auth-primary-dark);
+}
+.auth-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-alert-error {
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  color: var(--auth-error);
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.auth-forgot-link {
+  background: none;
+  border: none;
+  color: var(--auth-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+  width: fit-content;
+  margin-top: 0.5rem;
+}
+.auth-forgot-link:hover {
+  color: var(--auth-primary-dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .auth-card {
+    grid-template-columns: 1fr;
+  }
+  .auth-image-col {
+    display: none;
+  }
+  .auth-mobile-logo {
+    display: block;
+  }
+  .auth-form-col {
+    padding: 1.5rem;
+  }
+  .auth-title {
+    font-size: 1.25rem;
+  }
+}
+
+
+
+
+
+/* Alerta de éxito */
+.auth-alert-success {
+  background-color: #dcfce7;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}

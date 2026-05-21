@@ -1,30 +1,31 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Edit } from 'lucide-react';
+import '../../assets/styles/rrhh.css';
 
-interface HorarioCardProps {
-  title: string;
-  schedule: string;
-  count: number;
-  onEdit?: () => void;
+interface Horario {
+  id: string;
+  nombre: string;
+  horario: string;
+  dias: string;
+  empleados: number;
 }
 
-export const HorarioCard: React.FC<HorarioCardProps> = ({ title, schedule, count, onEdit }) => {
+interface HorarioCardProps {
+  horarios: Horario[];
+}
+
+const HorarioCard: React.FC<HorarioCardProps> = ({ horarios }) => {
   return (
-    <Card className="mb-3">
-      <CardContent className="p-3 flex justify-between items-center">
-        <div>
-          <p className="font-medium">{title}</p>
-          <p className="text-sm text-muted-foreground">{schedule}</p>
+    <div className="rrhh-horarios-grid">
+      {horarios.map(horario => (
+        <div key={horario.id} className="rrhh-horario-card">
+          <div className="rrhh-horario-title">{horario.nombre}</div>
+          <div className="rrhh-horario-detail"><strong>Horario:</strong> {horario.horario}</div>
+          <div className="rrhh-horario-detail"><strong>Días:</strong> {horario.dias}</div>
+          <div className="rrhh-horario-detail"><strong>Empleados:</strong> {horario.empleados}</div>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-muted-foreground">{count} emp.</span>
-          <Button size="sm" variant="ghost" onClick={onEdit}>
-            <Edit className="h-4 w-4" />
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+      ))}
+    </div>
   );
 };
+
+export default HorarioCard;

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  FormControl, FormLabel, TextField, Button, Card, Alert, Link as MuiLink
-} from '@mui/material';
 import { supabase } from '../../lib/supabase';
 import logo from '../../assets/images/login.png';
+import '../../assets/styles/auth.css';
 
 const ForgotPassword: React.FC = () => {
   const navigate = useNavigate();
@@ -32,68 +30,69 @@ const ForgotPassword: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
+    <div className="auth-container">
+      <div className="auth-card">
         {/* Imagen izquierda (desktop) */}
-        <div className="login-image-col">
-          <img src={logo} alt="Sistema de Asistencia" className="login-image" />
+        <div className="auth-image-col">
+          <img src={logo} alt="Sistema de Asistencia" className="auth-image" />
         </div>
 
         {/* Formulario */}
-        <div className="login-form-col">
-          <Card className="login-mui-card" variant="outlined">
-            <div className="login-mobile-logo">
+        <div className="auth-form-col">
+          <div className="auth-mui-card">
+            <div className="auth-mobile-logo">
               <img src={logo} alt="Logo" />
             </div>
 
-            <h1 className="login-title">Restablecer contraseña</h1>
-            <p className="login-subtitle">
+            <h1 className="auth-title">Restablecer contraseña</h1>
+            <p className="auth-subtitle">
               Ingresa tu correo electrónico y te enviaremos un enlace para crear una nueva contraseña.
             </p>
 
-            <form onSubmit={handleSubmit} className="login-form" noValidate>
-              <FormControl fullWidth>
-                <FormLabel htmlFor="email">Correo Electrónico</FormLabel>
-                <TextField
+            <form onSubmit={handleSubmit} className="auth-form" noValidate>
+              <div className="auth-form-control">
+                <label htmlFor="email" className="auth-label">Correo Electrónico</label>
+                <input
                   id="email"
                   type="email"
                   placeholder="tu@empresa.com"
                   autoComplete="email"
                   autoFocus
                   required
-                  fullWidth
-                  variant="outlined"
-                  size="medium"
+                  className="auth-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-              </FormControl>
+              </div>
 
-              <Button
+              <button
                 type="submit"
-                fullWidth
-                variant="contained"
+                className="auth-submit-btn"
                 disabled={loading}
-                className="login-submit-btn"
               >
                 {loading ? 'Enviando...' : 'Enviar enlace'}
-              </Button>
+              </button>
 
-              {message && <Alert severity="success" sx={{ mt: 2 }}>{message}</Alert>}
-              {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+              {message && (
+                <div className="auth-alert-success">
+                  {message}
+                </div>
+              )}
+              {error && (
+                <div className="auth-alert-error">
+                  {error}
+                </div>
+              )}
 
-              <MuiLink
-                component="button"
+              <button
                 type="button"
                 onClick={() => navigate('/login')}
-                className="login-forgot-link"
-                variant="body2"
-                sx={{ mt: 1 }}
+                className="auth-forgot-link"
               >
                 Volver al inicio de sesión
-              </MuiLink>
+              </button>
             </form>
-          </Card>
+          </div>
         </div>
       </div>
     </div>

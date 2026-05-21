@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import {
   getDashboardStats,
   getRecentAttendance,
@@ -18,9 +19,7 @@ import RecentActivityList from '@/components/admin/RecentActivityList';
 import PendingRequestsList from '@/components/admin/PendingRequestsList';
 import ActivityChart from '@/components/admin/ActivityChart';
 import RetirementPieChart from '@/components/admin/RetirementPieChart';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
+import '@/assets/styles/admin.css';
 
 const DashboardPage: React.FC = () => {
   const [stats, setStats] = useState<Stat[]>([]);
@@ -49,10 +48,10 @@ const DashboardPage: React.FC = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div className="p-8 text-center">Cargando dashboard...</div>;
+  if (loading) return <div className="admin-page-loading">Cargando dashboard...</div>;
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="admin-dashboard-container">
       {/* Estadísticas principales */}
       <StatsGrid stats={stats} />
 
@@ -60,57 +59,53 @@ const DashboardPage: React.FC = () => {
       <ActivityChart data={chartData} />
 
       {/* Sección de tres columnas: gráfico de retiros, actividad reciente, solicitudes pendientes */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="admin-three-columns">
         <RetirementPieChart />
 
         {/* Actividad Reciente con enlace a Asistencia */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Actividad Reciente</CardTitle>
-            <Link to="/asistencia">
-              <Button variant="ghost" size="sm" className="gap-1">
-                Ver todas <ChevronRight className="h-4 w-4" />
-              </Button>
+        <div className="admin-card">
+          <div className="admin-card-header admin-card-header-row">
+            <h3 className="admin-card-title">Actividad Reciente</h3>
+            <Link to="/asistencia" className="admin-link-icon">
+              <span className="admin-link-text">Ver todas</span>
+              <ChevronRight className="admin-icon-sm" />
             </Link>
-          </CardHeader>
-          <CardContent>
+          </div>
+          <div className="admin-card-content">
             <RecentActivityList activities={activities} />
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Solicitudes Pendientes con enlace a Solicitudes */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Solicitudes Pendientes</CardTitle>
-            <Link to="/solicitudes">
-              <Button variant="ghost" size="sm" className="gap-1">
-                Ver todas <ChevronRight className="h-4 w-4" />
-              </Button>
+        <div className="admin-card">
+          <div className="admin-card-header admin-card-header-row">
+            <h3 className="admin-card-title">Solicitudes Pendientes</h3>
+            <Link to="/solicitudes" className="admin-link-icon">
+              <span className="admin-link-text">Ver todas</span>
+              <ChevronRight className="admin-icon-sm" />
             </Link>
-          </CardHeader>
-          <CardContent>
+          </div>
+          <div className="admin-card-content">
             <PendingRequestsList requests={pendingRequests} />
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* Últimas Marcaciones con enlace a Asistencia */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+      <div className="admin-card">
+        <div className="admin-card-header admin-card-header-row">
           <div>
-            <CardTitle>Últimas Marcaciones</CardTitle>
-            <p className="text-sm text-muted-foreground">Registros de hoy en tiempo real</p>
+            <h3 className="admin-card-title">Últimas Marcaciones</h3>
+            <p className="admin-card-subtitle">Registros de hoy en tiempo real</p>
           </div>
-          <Link to="/asistencia">
-            <Button variant="outline" size="sm">
-              Ver historial completo
-            </Button>
+          <Link to="/asistencia" className="admin-btn-outline admin-btn-sm">
+            Ver historial completo
           </Link>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div className="admin-card-content">
           <RecentAttendanceTable records={attendance} />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

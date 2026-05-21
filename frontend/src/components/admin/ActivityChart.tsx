@@ -1,17 +1,7 @@
 ﻿import React from 'react';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { ChartData } from '@/services/admin.service';
-import '@/assets/styles/components/_activity-chart.css';
+import '@/assets/styles/admin.css';
 
 interface ActivityChartProps {
   data: ChartData[];
@@ -19,25 +9,24 @@ interface ActivityChartProps {
 
 const ActivityChart: React.FC<ActivityChartProps> = ({ data }) => {
   return (
-    <Card className="activity-chart">
-      <CardHeader>
-        <CardTitle>Asistencia vs Ausencias (última semana)</CardTitle>
-      </CardHeader>
-      <CardContent className="activity-chart__content">
-        <ResponsiveContainer width="100%" height={300}> {/* height aún necesario */}
+    <div className="admin-chart-card">
+      <div className="admin-chart-header">
+        <h3 className="admin-chart-title">Asistencia vs Ausencias (última semana)</h3>
+      </div>
+      <div className="admin-chart-content">
+        <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" /> {/* strokeDasharray es visual, pero lo movemos a CSS? A veces Recharts ignora CSS para esta propiedad; lo dejamos por simplicidad */}
+            <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
             <YAxis />
             <Tooltip />
             <Legend />
-            {/* Solo dataKey y className, sin stroke ni strokeWidth */}
-            <Line type="monotone" dataKey="asistencias" className="line-asistencias" />
-            <Line type="monotone" dataKey="ausencias" className="line-ausencias" />
+            <Line type="monotone" dataKey="asistencias" className="admin-chart-line--attendance" />
+            <Line type="monotone" dataKey="ausencias" className="admin-chart-line--absence" />
           </LineChart>
         </ResponsiveContainer>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

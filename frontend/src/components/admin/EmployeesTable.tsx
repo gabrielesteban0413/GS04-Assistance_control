@@ -1,15 +1,7 @@
 import React from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
 import { Pencil, Trash2 } from 'lucide-react';
 import { Employee } from '@/services/admin.service';
+import '@/assets/styles/admin.css';
 
 interface EmployeesTableProps {
   employees: Employee[];
@@ -26,69 +18,54 @@ const EmployeesTable: React.FC<EmployeesTableProps> = ({
 }) => {
   if (loading) {
     return (
-      <div className="flex justify-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div className="admin-loading-container">
+        <div className="admin-spinner"></div>
       </div>
     );
   }
 
   if (employees.length === 0) {
-    return <div className="text-center py-8 text-muted-foreground">No hay empleados registrados.</div>;
+    return <div className="admin-empty-message">No hay empleados registrados.</div>;
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>NOMBRE</TableHead>
-          <TableHead>DOCUMENTO</TableHead>
-          <TableHead>EMAIL</TableHead>
-          <TableHead>DEPARTAMENTO</TableHead>
-          <TableHead>ESTADO</TableHead>
-          <TableHead>ACCIONES</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {employees.map((emp) => (
-          <TableRow key={emp.id}>
-            <TableCell className="font-medium">{emp.nombre}</TableCell>
-            <TableCell>{emp.documento}</TableCell>
-            <TableCell>{emp.email}</TableCell>
-            <TableCell>{emp.departamento}</TableCell>
-            <TableCell>
-              <span
-                className={`px-2 py-1 rounded-full text-xs font-medium ${
-                  emp.estado === 'activo'
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-gray-100 text-gray-800'
-                }`}
-              >
-                {emp.estado === 'activo' ? 'Activo' : 'Inactivo'}
-              </span>
-            </TableCell>
-            <TableCell>
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => onEdit(emp)}
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => onDelete(emp)}
-                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div className="admin-table-wrapper">
+      <table className="admin-table">
+        <thead>
+          <tr>
+            <th className="admin-table-header">NOMBRE</th>
+            <th className="admin-table-header">DOCUMENTO</th>
+            <th className="admin-table-header">EMAIL</th>
+            <th className="admin-table-header">DEPARTAMENTO</th>
+            <th className="admin-table-header">ESTADO</th>
+            <th className="admin-table-header">ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          {employees.map((emp) => (
+            <tr key={emp.id} className="admin-table-row">
+              <td className="admin-table-cell admin-cell-name">{emp.nombre}</td>
+              <td className="admin-table-cell">{emp.documento}</td>
+              <td className="admin-table-cell">{emp.email}</td>
+              <td className="admin-table-cell">{emp.departamento}</td>
+              <td className="admin-table-cell">
+                <span className={`admin-status-badge ${emp.estado === 'activo' ? 'admin-status-active' : 'admin-status-inactive'}`}>
+                  {emp.estado === 'activo' ? 'Activo' : 'Inactivo'}
+                </span>
+              </td>
+              <td className="admin-table-cell admin-actions-cell">
+                <button className="admin-action-btn" onClick={() => onEdit(emp)}>
+                  <Pencil size={16} />
+                </button>
+                <button className="admin-action-btn admin-action-btn--delete" onClick={() => onDelete(emp)}>
+                  <Trash2 size={16} />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

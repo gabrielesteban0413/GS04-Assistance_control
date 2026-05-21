@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import { PendingRequest } from '@/services/admin.service';
+import '@/assets/styles/admin.css';
 
 interface PendingRequestsListProps {
   requests: PendingRequest[];
@@ -7,16 +8,14 @@ interface PendingRequestsListProps {
 
 const PendingRequestsList: React.FC<PendingRequestsListProps> = ({ requests }) => {
   return (
-    <div className="space-y-3">
+    <div className="admin-requests-list">
       {requests.map((req) => (
-        <div key={req.id} className="flex justify-between items-center">
-          <div>
-            <p className="font-medium">{req.employeeName}</p>
-            <p className="text-sm text-muted-foreground">{req.reason} • {req.date}</p>
+        <div key={req.id} className="admin-request-item">
+          <div className="admin-request-info">
+            <p className="admin-request-employee">{req.employeeName}</p>
+            <p className="admin-request-details">{req.reason} • {req.date}</p>
           </div>
-          <button className="bg-[#008eb0] text-white px-3 py-1 rounded-full text-sm hover:bg-[#006c8a]">
-            Aprobar
-          </button>
+          <button className="admin-approve-btn">Aprobar</button>
         </div>
       ))}
     </div>

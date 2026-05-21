@@ -1,6 +1,6 @@
 ﻿import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Stat } from '@/services/admin.service';
+import '@/assets/styles/admin.css';
 
 interface StatsGridProps {
   stats: Stat[];
@@ -8,22 +8,22 @@ interface StatsGridProps {
 
 const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="admin-stats-grid">
       {stats.map((stat, idx) => (
-        <Card key={idx}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stat.value}</div>
-            {stat.subtitle && <p className="text-xs text-muted-foreground">{stat.subtitle}</p>}
+        <div key={idx} className="admin-stat-card"> 
+          <div className="admin-stat-card-header">
+            <div className="admin-stat-title">{stat.title}</div>
+          </div>
+          <div className="admin-stat-card-content">
+            <div className="admin-stat-value">{stat.value}</div>
+            {stat.subtitle && <p className="admin-stat-subtitle">{stat.subtitle}</p>}
             {stat.trend && (
-              <div className={`text-xs ${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+              <div className={`admin-stat-trend admin-stat-trend--${stat.trend}`}>
                 {stat.trend === 'up' ? '↑' : '↓'} {stat.trendValue}
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       ))}
     </div>
   );

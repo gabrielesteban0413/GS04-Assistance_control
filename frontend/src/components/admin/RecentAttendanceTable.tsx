@@ -1,52 +1,39 @@
-// src/components/admin/RecentAttendanceTable.tsx
 import React from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { AttendanceRecord } from '@/services/admin.service';
+import '@/assets/styles/admin.css';
 
 interface RecentAttendanceTableProps {
   records: AttendanceRecord[];
 }
 
-const statusColor: Record<string, string> = {
-  Puntual: 'text-green-600',
-  Retardo: 'text-yellow-600',
-  Ausente: 'text-red-600',
-  Permiso: 'text-blue-600',
-};
-
 const RecentAttendanceTable: React.FC<RecentAttendanceTableProps> = ({ records }) => {
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>EMPLEADO</TableHead>
-          <TableHead>ENTRADA</TableHead>
-          <TableHead>SALIDA</TableHead>
-          <TableHead>TURNO</TableHead>
-          <TableHead>ESTADO</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {records.map((record) => (
-          <TableRow key={record.id}>
-            <TableCell className="font-medium">{record.employeeName}</TableCell>
-            <TableCell>{record.entryTime || '—'}</TableCell>
-            <TableCell>{record.exitTime || '—'}</TableCell>
-            <TableCell>{record.shift}</TableCell>
-            <TableCell className={statusColor[record.status]}>
-              {record.status}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div className="admin-table-wrapper">
+      <table className="admin-table">
+        <thead>
+          <tr>
+            <th className="admin-table-header">EMPLEADO</th>
+            <th className="admin-table-header">ENTRADA</th>
+            <th className="admin-table-header">SALIDA</th>
+            <th className="admin-table-header">TURNO</th>
+            <th className="admin-table-header">ESTADO</th>
+          </tr>
+        </thead>
+        <tbody>
+          {records.map((record) => (
+            <tr key={record.id} className="admin-table-row">
+              <td className="admin-table-cell admin-cell-name">{record.employeeName}</td>
+              <td className="admin-table-cell">{record.entryTime || '—'}</td>
+              <td className="admin-table-cell">{record.exitTime || '—'}</td>
+              <td className="admin-table-cell">{record.shift}</td>
+              <td className={`admin-table-cell admin-status-text admin-status-text--${record.status.toLowerCase()}`}>
+                {record.status}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

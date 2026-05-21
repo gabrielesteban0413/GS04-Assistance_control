@@ -1,53 +1,41 @@
 import React from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { AttendanceRecordDetail } from '@/services/admin.service';
+import '@/assets/styles/admin.css';
 
 interface AttendanceTableProps {
   records: AttendanceRecordDetail[];
 }
 
-const statusColor: Record<string, string> = {
-  Completo: 'text-green-600',
-  Retardo: 'text-yellow-600',
-  Falta: 'text-red-600',
-  Permiso: 'text-blue-600',
-};
-
 const AttendanceTable: React.FC<AttendanceTableProps> = ({ records }) => {
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>EMPLEADO</TableHead>
-          <TableHead>FECHA</TableHead>
-          <TableHead>ENTRADA</TableHead>
-          <TableHead>SALIDA</TableHead>
-          <TableHead>HORAS</TableHead>
-          <TableHead>ESTADO</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {records.map((record) => (
-          <TableRow key={record.id}>
-            <TableCell className="font-medium">{record.employeeName}</TableCell>
-            <TableCell>{record.date}</TableCell>
-            <TableCell>{record.entryTime}</TableCell>
-            <TableCell>{record.exitTime}</TableCell>
-            <TableCell>{record.hoursWorked}</TableCell>
-            <TableCell className={statusColor[record.status]}>
-              {record.status}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div className="admin-table-wrapper">
+      <table className="admin-table">
+        <thead>
+          <tr>
+            <th className="admin-table-header">EMPLEADO</th>
+            <th className="admin-table-header">FECHA</th>
+            <th className="admin-table-header">ENTRADA</th>
+            <th className="admin-table-header">SALIDA</th>
+            <th className="admin-table-header">HORAS</th>
+            <th className="admin-table-header">ESTADO</th>
+          </tr>
+        </thead>
+        <tbody>
+          {records.map((record) => (
+            <tr key={record.id} className="admin-table-row">
+              <td className="admin-table-cell admin-cell-name">{record.employeeName}</td>
+              <td className="admin-table-cell">{record.date}</td>
+              <td className="admin-table-cell">{record.entryTime}</td>
+              <td className="admin-table-cell">{record.exitTime}</td>
+              <td className="admin-table-cell">{record.hoursWorked}</td>
+              <td className={`admin-table-cell admin-status-text admin-status-text--${record.status.toLowerCase()}`}>
+                {record.status}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

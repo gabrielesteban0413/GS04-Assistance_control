@@ -1,14 +1,6 @@
 ﻿import React from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
 import { LeaveRequest } from '@/services/admin.service';
+import '@/assets/styles/admin.css';
 
 interface RequestsTableProps {
   requests: LeaveRequest[];
@@ -16,51 +8,45 @@ interface RequestsTableProps {
   onReject: (id: string) => void;
 }
 
-const statusColor: Record<string, string> = {
-  Pendiente: 'text-yellow-600',
-  Aprobada: 'text-green-600',
-  Rechazada: 'text-red-600',
-};
-
 const RequestsTable: React.FC<RequestsTableProps> = ({ requests, onApprove, onReject }) => {
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>EMPLEADO</TableHead>
-          <TableHead>TIPO</TableHead>
-          <TableHead>FECHA INICIO</TableHead>
-          <TableHead>FECHA FIN</TableHead>
-          <TableHead>MOTIVO</TableHead>
-          <TableHead>ESTADO</TableHead>
-          <TableHead>ACCIONES</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {requests.map((req) => (
-          <TableRow key={req.id}>
-            <TableCell className="font-medium">{req.employeeName}</TableCell>
-            <TableCell>{req.type}</TableCell>
-            <TableCell>{req.startDate}</TableCell>
-            <TableCell>{req.endDate}</TableCell>
-            <TableCell>{req.reason}</TableCell>
-            <TableCell className={statusColor[req.status]}>{req.status}</TableCell>
-            <TableCell>
-              {req.status === 'Pendiente' && (
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={() => onApprove(req.id)} variant="default">
-                    Aprobar
-                  </Button>
-                  <Button size="sm" onClick={() => onReject(req.id)} variant="destructive">
-                    Rechazar
-                  </Button>
-                </div>
-              )}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div className="admin-table-wrapper">
+      <table className="admin-table">
+        <thead>
+          <tr>
+            <th className="admin-table-header">EMPLEADO</th>
+            <th className="admin-table-header">TIPO</th>
+            <th className="admin-table-header">FECHA INICIO</th>
+            <th className="admin-table-header">FECHA FIN</th>
+            <th className="admin-table-header">MOTIVO</th>
+            <th className="admin-table-header">ESTADO</th>
+            <th className="admin-table-header">ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          {requests.map((req) => (
+            <tr key={req.id} className="admin-table-row">
+              <td className="admin-table-cell admin-cell-name">{req.employeeName}</td>
+              <td className="admin-table-cell">{req.type}</td>
+              <td className="admin-table-cell">{req.startDate}</td>
+              <td className="admin-table-cell">{req.endDate}</td>
+              <td className="admin-table-cell">{req.reason}</td>
+              <td className={`admin-table-cell admin-status-text admin-status-text--${req.status.toLowerCase()}`}>
+                {req.status}
+              </td>
+              <td className="admin-table-cell">
+                {req.status === 'Pendiente' && (
+                  <div className="admin-requests-actions">
+                    <button className="admin-btn-approve" onClick={() => onApprove(req.id)}>Aprobar</button>
+                    <button className="admin-btn-reject" onClick={() => onReject(req.id)}>Rechazar</button>
+                  </div>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

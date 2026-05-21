@@ -1,24 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   getEmployees,
   createEmployee,
@@ -29,6 +10,7 @@ import { Employee, EmployeeInput } from '@/types/employee';
 import EmployeesTable from '@/components/admin/EmployeesTable';
 import { exportToCSV } from '@/utils/exportUtils';
 import logo from '@/assets/images/logo_blanco.png';
+import '@/assets/styles/admin.css';
 
 const EmpleadosPage: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -131,114 +113,113 @@ const EmpleadosPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 p-6">
-      <Card>
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            {/* Logo izquierda */}
-            <div className="flex-shrink-0">
-              <img src={logo} alt="Logo" className="h-12 w-auto" />
+    <div className="admin-page-container">
+      <div className="admin-card">
+        <div className="admin-card-header">
+          <div className="admin-empleados-header">
+            <div className="admin-logo">
+              <img src={logo} alt="Logo" className="admin-logo-img" />
             </div>
-
-            {/* Título centrado */}
-            <div className="flex-1 text-center">
-              <CardTitle className="text-xl md:text-2xl">Gestión de Empleados</CardTitle>
+            <div className="admin-title-wrapper">
+              <h2 className="admin-page-title">Gestión de Empleados</h2>
             </div>
-
-            {/* Botones a la derecha */}
-            <div className="flex gap-2">
-              <Button onClick={handleExportCSV} variant="outline">
+            <div className="admin-header-actions">
+              <button onClick={handleExportCSV} className="admin-btn-outline">
                 Exportar CSV
-              </Button>
-              <Button onClick={openCreateDialog}>
-                <Plus className="mr-2 h-4 w-4" /> Nuevo Empleado
-              </Button>
+              </button>
+              <button onClick={openCreateDialog} className="admin-btn-primary">
+                <Plus className="admin-icon-sm" /> Nuevo Empleado
+              </button>
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div className="admin-card-content">
           <EmployeesTable
             employees={employees}
             loading={loading}
             onEdit={openEditDialog}
             onDelete={handleDelete}
           />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      {/* Diálogo de creación/edición con fondo blanco */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-[500px] bg-white rounded-lg shadow-lg">
-          <DialogHeader>
-            <DialogTitle>{isEditing ? 'Editar empleado' : 'Nuevo empleado'}</DialogTitle>
-            <DialogDescription>
-              Completa los datos del empleado.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="nombre">Nombre *</Label>
-              <Input
-                id="nombre"
-                value={form.nombre}
-                onChange={(e) => handleChange('nombre', e.target.value)}
-                placeholder="Nombre completo"
-              />
+      {/* Modal personalizado */}
+      {dialogOpen && (
+        <div className="admin-modal-overlay" onClick={() => setDialogOpen(false)}>
+          <div className="admin-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-modal-header">
+              <h3 className="admin-modal-title">{isEditing ? 'Editar empleado' : 'Nuevo empleado'}</h3>
+              <p className="admin-modal-description">Completa los datos del empleado.</p>
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="documento">Documento *</Label>
-              <Input
-                id="documento"
-                value={form.documento}
-                onChange={(e) => handleChange('documento', e.target.value)}
-                placeholder="Número de documento"
-              />
+            <div className="admin-modal-body">
+              <div className="admin-form-group">
+                <label htmlFor="nombre" className="admin-label">Nombre *</label>
+                <input
+                  id="nombre"
+                  type="text"
+                  className="admin-input"
+                  value={form.nombre}
+                  onChange={(e) => handleChange('nombre', e.target.value)}
+                  placeholder="Nombre completo"
+                />
+              </div>
+              <div className="admin-form-group">
+                <label htmlFor="documento" className="admin-label">Documento *</label>
+                <input
+                  id="documento"
+                  type="text"
+                  className="admin-input"
+                  value={form.documento}
+                  onChange={(e) => handleChange('documento', e.target.value)}
+                  placeholder="Número de documento"
+                />
+              </div>
+              <div className="admin-form-group">
+                <label htmlFor="email" className="admin-label">Email *</label>
+                <input
+                  id="email"
+                  type="email"
+                  className="admin-input"
+                  value={form.email}
+                  onChange={(e) => handleChange('email', e.target.value)}
+                  placeholder="correo@empresa.com"
+                />
+              </div>
+              <div className="admin-form-group">
+                <label htmlFor="departamento" className="admin-label">Departamento *</label>
+                <input
+                  id="departamento"
+                  type="text"
+                  className="admin-input"
+                  value={form.departamento}
+                  onChange={(e) => handleChange('departamento', e.target.value)}
+                  placeholder="Ej. Ventas, TI, RRHH"
+                />
+              </div>
+              <div className="admin-form-group">
+                <label htmlFor="estado" className="admin-label">Estado</label>
+                <select
+                  id="estado"
+                  className="admin-select"
+                  value={form.estado}
+                  onChange={(e) => handleChange('estado', e.target.value as 'activo' | 'inactivo')}
+                >
+                  <option value="activo">Activo</option>
+                  <option value="inactivo">Inactivo</option>
+                </select>
+              </div>
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email *</Label>
-              <Input
-                id="email"
-                type="email"
-                value={form.email}
-                onChange={(e) => handleChange('email', e.target.value)}
-                placeholder="correo@empresa.com"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="departamento">Departamento *</Label>
-              <Input
-                id="departamento"
-                value={form.departamento}
-                onChange={(e) => handleChange('departamento', e.target.value)}
-                placeholder="Ej. Ventas, TI, RRHH"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="estado">Estado</Label>
-              <Select
-                value={form.estado}
-                onValueChange={(value) => handleChange('estado', value as 'activo' | 'inactivo')}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Seleccionar estado" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="activo">Activo</SelectItem>
-                  <SelectItem value="inactivo">Inactivo</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="admin-modal-footer">
+              <button className="admin-btn-outline" onClick={() => setDialogOpen(false)}>
+                Cancelar
+              </button>
+              <button className="admin-btn-primary" onClick={handleSave} disabled={saving}>
+                {saving ? 'Guardando...' : (isEditing ? 'Actualizar' : 'Crear')}
+              </button>
             </div>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>
-              Cancelar
-            </Button>
-            <Button onClick={handleSave} disabled={saving}>
-              {saving ? 'Guardando...' : (isEditing ? 'Actualizar' : 'Crear')}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
     </div>
   );
 };

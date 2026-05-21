@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { AttendanceRecordDetail, getAttendanceRecords } from '@/services/admin.service';
 import AttendanceTable from '@/components/admin/AttendanceTable';
 import { exportToCSV } from '@/utils/exportUtils';
 import logo from '@/assets/images/logo_blanco.png';
+import '@/assets/styles/admin.css';
 
 const AsistenciaPage: React.FC = () => {
   const [records, setRecords] = useState<AttendanceRecordDetail[]>([]);
@@ -43,46 +41,46 @@ const AsistenciaPage: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="p-8 text-center">Cargando registros de asistencia...</div>;
+    return <div className="admin-page-loading">Cargando registros de asistencia...</div>;
   }
 
   return (
-    <div className="space-y-6 p-6">
-      <Card>
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div className="admin-page-container">
+      <div className="admin-card">
+        <div className="admin-card-header">
+          <div className="admin-asistencia-header">
             {/* Logo izquierda */}
-            <div className="flex-shrink-0">
-              <img src={logo} alt="Logo" className="h-12 w-auto" />
+            <div className="admin-logo">
+              <img src={logo} alt="Logo" className="admin-logo-img" />
             </div>
 
-            {/* Título centrado (en móvil se centra, en escritorio ocupa espacio) */}
-            <div className="flex-1 text-center">
-              <CardTitle className="text-xl md:text-2xl">Gestión de Asistencia</CardTitle>
+            {/* Título centrado */}
+            <div className="admin-title-wrapper">
+              <h2 className="admin-page-title">Gestión de Asistencia</h2>
             </div>
 
-            {/* Buscador + exportar a la derecha */}
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
+            {/* Buscador + exportar */}
+            <div className="admin-header-actions">
+              <div className="admin-search-wrapper">
+                <Search className="admin-search-icon" />
+                <input
                   type="text"
                   placeholder="Buscar empleado, fecha o estado..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8 w-64"
+                  className="admin-search-input"
                 />
               </div>
-              <Button onClick={handleExportCSV} variant="outline">
+              <button onClick={handleExportCSV} className="admin-btn-outline">
                 Exportar a CSV
-              </Button>
+              </button>
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div className="admin-card-content">
           <AttendanceTable records={filteredRecords} />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

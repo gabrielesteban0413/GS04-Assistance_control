@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Edit } from 'lucide-react';
 import { listHorarios, Horario } from '@/services/horario.service';
 import logo from '@/assets/images/logo_blanco.png';
+import '@/assets/styles/admin.css';
 
 const HorariosPage: React.FC = () => {
   const [horarios, setHorarios] = useState<Horario[]>([]);
@@ -20,53 +18,46 @@ const HorariosPage: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div className="p-8 text-center">Cargando horarios...</div>;
+    return <div className="admin-page-loading">Cargando horarios...</div>;
   }
 
   return (
-    <div className="space-y-6 p-6">
-      <Card>
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            {/* Logo izquierda */}
-            <div className="flex-shrink-0">
-              <img src={logo} alt="Logo" className="h-12 w-auto" />
+    <div className="admin-page-container">
+      <div className="admin-card">
+        <div className="admin-card-header">
+          <div className="admin-horarios-header">
+            <div className="admin-logo">
+              <img src={logo} alt="Logo" className="admin-logo-img" />
             </div>
-
-            {/* Título centrado */}
-            <div className="flex-1 text-center">
-              <CardTitle className="text-xl md:text-2xl">Horarios y Turnos</CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Configuración de horarios por departamento
-              </p>
+            <div className="admin-title-wrapper">
+              <h2 className="admin-page-title">Horarios y Turnos</h2>
+              <p className="admin-page-subtitle">Configuración de horarios por departamento</p>
             </div>
-
-            {/* Espacio a la derecha (para mantener simetría) */}
-            <div className="w-12" /> {/* Ajusta el ancho si lo deseas */}
+            <div className="admin-spacer"></div>
           </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        </div>
+        <div className="admin-card-content">
+          <div className="admin-horarios-grid">
             {horarios.map((horario) => (
-              <Card key={horario.id} variant="outlined" className="rounded-lg">
-                <CardContent className="p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <h3 className="font-semibold text-lg">{horario.nombre}</h3>
-                    <Badge variant="secondary">{horario.empleados} emp.</Badge>
+              <div key={horario.id} className="admin-horario-card">
+                <div className="admin-horario-card-content">
+                  <div className="admin-horario-header">
+                    <h3 className="admin-horario-title">{horario.nombre}</h3>
+                    <span className="admin-badge">{horario.empleados} emp.</span>
                   </div>
-                  <div className="space-y-1 text-sm text-muted-foreground">
+                  <div className="admin-horario-details">
                     <p><strong>Horario:</strong> {horario.horario}</p>
                     <p><strong>Días:</strong> {horario.dias}</p>
                   </div>
-                  <Button variant="ghost" size="sm" className="mt-3">
-                    <Edit className="mr-2 h-4 w-4" /> Editar
-                  </Button>
-                </CardContent>
-              </Card>
+                  <button className="admin-btn-ghost admin-btn-sm">
+                    <Edit className="admin-icon-sm" /> Editar
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

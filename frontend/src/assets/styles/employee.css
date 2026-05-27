@@ -1,0 +1,89 @@
+/* CONTENEDOR PRINCIPAL */
+
+.employee-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* APPBAR */
+
+.employee-appbar {
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+  color: #222 !important;
+}
+
+/* TOOLBAR */
+
+.employee-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 70px !important;
+}
+
+/* BOTON MENU */
+
+.employee-menu-button {
+  margin-right: 10px !important;
+  color: #333 !important;
+}
+
+/* HEADER */
+
+.employee-header-text {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* TITULO */
+
+.employee-title {
+  color: #222;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  line-height: 1.3;
+}
+
+/* SUBTITULO */
+
+.employee-subtitle {
+  color: #888;
+  font-size: 13px !important;
+  margin-top: 2px;
+}
+
+/* USUARIO */
+
+.employee-user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* TEXTO USUARIO */
+
+.employee-user-text {
+  color: #222;
+  font-size: 14px !important;
+}
+
+/* AVATAR */
+
+.employee-avatar {
+  background-color: #000 !important;
+  width: 38px !important;
+  height: 38px !important;
+}
+
+/* MAIN */
+
+.employee-main {
+  flex-grow: 1;
+  margin-top: 70px;
+  background-color: #63bdd4;
+  min-height: 100vh;
+  padding: 30px;
+}

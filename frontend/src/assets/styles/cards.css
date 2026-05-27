@@ -1,0 +1,39 @@
+/* CARD INGRESO */
+
+.ingreso-card {
+  background: #2f8d2f !important;
+  color: white !important;
+  border-radius: 16px !important;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ingreso-card:hover {
+  transform: translateY(-3px);
+}
+
+/* CARD SALIDA */
+
+.salida-card {
+  background: #00a3cf !important;
+  color: white !important;
+  border-radius: 16px !important;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.salida-card:hover {
+  transform: translateY(-3px);
+}

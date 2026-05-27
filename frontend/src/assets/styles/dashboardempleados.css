@@ -1,0 +1,112 @@
+/* CONTENEDOR PRINCIPAL */
+.dashboard-container {
+  width: 100%;
+  min-height: 80vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+}
+/* CARD */
+
+.dashboard-card {
+  width: 100%;
+  max-width: 550px;
+  border-radius: 24px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* CONTENIDO CARD */
+
+.dashboard-card-content {
+  padding: 40px !important;
+}
+
+/* USUARIO */
+
+.dashboard-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+/* AVATAR */
+
+.dashboard-avatar {
+  background-color: #00a3cf !important;
+  width: 50px !important;
+  height: 50px !important;
+}
+
+/* TITULO */
+
+.dashboard-user-title {
+  font-size: 32px !important;
+  font-weight: bold !important;
+  color: #00a3cf;
+}
+
+/* EMAIL */
+
+.dashboard-user-email {
+  font-size: 14px;
+  color: #777;
+}
+
+/* FECHA Y HORA */
+
+.dashboard-info-container {
+  margin-bottom: 32px;
+}
+
+.dashboard-info-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+}
+
+/* ICONOS */
+
+.dashboard-info-icon {
+  color: #00a3cf;
+  font-size: 20px !important;
+}
+
+/* TEXTO */
+
+.dashboard-info-text {
+  color: #666;
+  font-size: 14px !important;
+}
+
+/* CARDS */
+
+.dashboard-cards {
+  margin-bottom: 24px;
+}
+
+/* LOGOUT */
+
+.dashboard-logout {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.dashboard-logout-button {
+  color: #999 !important;
+}
+
+/* ALERT */
+
+.dashboard-alert {
+  width: 100%;
+}

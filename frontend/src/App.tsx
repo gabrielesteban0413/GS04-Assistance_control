@@ -1,229 +1,45 @@
-
-
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate
-} from 'react-router-dom';
-
-import {
-  ThemeProvider,
-  createTheme
-} from '@mui/material/styles';
-
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-
 import { Toaster } from '@/components/ui/sonner';
-
-/* LAYOUTS */
-
-import { AdminLayout } from './layouts/AdminLayout';
-
-import { RrhhLayout } from './layouts/RrhhLayout';
-
-/* ADMIN */
-
+import { RrhhLayout } from './layouts/RrhhLayout'; // ← Importa tu layout de RRHH
 import DashboardPage from './pages/admin/Dashboard.page';
-
 import AsistenciaPage from './pages/admin/Asistencia.page';
-
 import SolicitudesPage from './pages/admin/Solicitudes.page';
-
 import EmpleadosPage from './pages/admin/Empleados.page';
-
 import HorariosPage from './pages/admin/Horarios.page';
-
-
 import ConfiguracionPage from './pages/admin/Configuracion.page';
-
-/* RRHH */
-
-import RrhhDashboardPage from './pages/rrhh/Dashboard.page';
-
-import RrhhEmpleadosPage from './pages/rrhh/Empleados.page';
-
-import RegisterPage from './pages/rrhh/registerpage';
-
-import ReportesPage from './pages/rrhh/Reportes.page';
-
-import SolicitudesRrhhPage from './pages/rrhh/Solicitudes.page';
-
-/* AUTH */
-
 import SignIn from './pages/auth/SignIn';
-
 import ForgotPassword from './pages/auth/ForgotPassword';
-
 import ResetPassword from './pages/auth/ResetPassword';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
-    },
-  },
-});
-
-const mockLogout = () =>
-  console.log('Cerrar sesión');
+const theme = createTheme({ palette: { primary: { main: '#1976d2' } } });
+const mockLogout = () => console.log('Cerrar sesión');
 
 function App() {
-
   return (
-
     <ThemeProvider theme={theme}>
-
       <CssBaseline />
-
       <BrowserRouter>
-
         <Routes>
-
-          {/* RUTAS PUBLICAS */}
-
-          <Route
-            path="/login"
-            element={<SignIn />}
-          />
-
-          <Route
-            path="/forgot-password"
-            element={<ForgotPassword />}
-          />
-
-          <Route
-            path="/reset-password"
-            element={<ResetPassword />}
-          />
-
-          {/* ADMIN */}
-
-          <Route
-            path="/"
-            element={
-              <AdminLayout
-                onLogout={mockLogout}
-              />
-            }
-          >
-
-            <Route
-              index
-              element={<DashboardPage />}
-            />
-
-            <Route
-              path="asistencia"
-              element={<AsistenciaPage />}
-            />
-
-            <Route
-              path="solicitudes"
-              element={<SolicitudesPage />}
-            />
-
-            <Route
-              path="empleados"
-              element={<EmpleadosPage />}
-            />
-
-            <Route
-              path="horarios"
-              element={<HorariosPage />}
-            />
-
+          {/* Ruta principal con el layout de RRHH */}
+          <Route path="/" element={<RrhhLayout onLogout={mockLogout} />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="asistencia" element={<AsistenciaPage />} />
+            <Route path="solicitudes" element={<SolicitudesPage />} />
+            <Route path="empleados" element={<EmpleadosPage />} />
+            <Route path="horarios" element={<HorariosPage />} />
             <Route path="configuracion">
-
-              <Route
-                index
-                element={
-                  <Navigate
-                    to="/configuracion/general"
-                    replace
-                  />
-                }
-              />
-
-              <Route
-                path="general"
-                element={<ConfiguracionPage />}
-              />
-
-              <Route
-                path="privacidad"
-                element={<ConfiguracionPage />}
-              />
- <Route
-              path="empleados"
-              element={<RrhhEmpleadosPage />}
-            />
-              <Route
-                path="seguridad"
-                element={<ConfiguracionPage />}
-              />
-
+              <Route index element={<Navigate to="/configuracion/general" replace />} />
+              <Route path="general" element={<ConfiguracionPage />} />
+              <Route path="privacidad" element={<ConfiguracionPage />} />
+              <Route path="seguridad" element={<ConfiguracionPage />} />
             </Route>
-
           </Route>
-
-          {/* RRHH */}
-
-          <Route
-            path="/rrhh"
-            element={
-              <RrhhLayout
-                onLogout={mockLogout}
-              />
-            }
-          >
-
-            {/* DASHBOARD RRHH */}
-
-            <Route
-              index
-              element={<RrhhDashboardPage />}
-            />
-
-            {/* EMPLEADOS */}
-
-            <Route
-              path="empleados"
-              element={<RrhhEmpleadosPage />}
-            />
-
-            {/* REGISTRO */}
-
-            <Route
-              path="registro"
-              element={<RegisterPage />}
-            />
-
-            {/* REPORTES */}
-
-            <Route
-              path="reportes"
-              element={<ReportesPage />}
-            />
-
-            {/* SOLICITUDES */}
-
-            <Route
-              path="solicitudes"
-              element={<SolicitudesRrhhPage />}
-            />
-
-          </Route>
-
         </Routes>
-
       </BrowserRouter>
-
-      <Toaster
-        richColors
-        position="top-center"
-      />
-
+      <Toaster richColors position="top-center" />
     </ThemeProvider>
   );
 }

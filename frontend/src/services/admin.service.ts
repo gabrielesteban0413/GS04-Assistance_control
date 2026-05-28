@@ -1,5 +1,7 @@
 // src/services/admin.service.ts
+import { supabase } from '../lib/supabase';
 
+// ========== INTERFACES EXISTENTES (no se modifican) ==========
 export interface Stat {
   title: string;
   value: number | string;
@@ -31,18 +33,187 @@ export interface PendingRequest {
   date: string;
 }
 
+export interface ChartData {
+  date: string;
+  asistencias: number;
+  ausencias: number;
+}
+
+export interface PieData {
+  name: string;
+  value: number;
+  children?: PieData[];
+}
+
+export interface AttendanceRecordDetail {
+  id: string;
+  employeeName: string;
+  date: string;
+  entryTime: string;
+  exitTime: string;
+  hoursWorked: string;
+  status: 'Completo' | 'Retardo' | 'Falta' | 'Permiso';
+}
+
+export interface LeaveRequest {
+  id: string;
+  employeeName: string;
+  type: 'Vacaciones' | 'Permiso médico' | 'Cambio de turno' | 'Estudio' | 'Otro';
+  startDate: string;
+  endDate: string;
+  reason: string;
+  status: 'Pendiente' | 'Aprobada' | 'Rechazada';
+  requestedDate: string;
+}
+
+export interface Employee {
+  id: string;
+  nombre: string;
+  apellido: string;
+  documento: string;
+  email: string;
+  departamento: string;
+  rol: string;
+  activo: boolean;
+}
+
+export type EmployeeInput = Omit<Employee, 'id'>;
+
+// ========== ESTADÍSTICAS DEL DASHBOARD (con datos reales de usuario) ==========
 export const getDashboardStats = async (): Promise<Stat[]> => {
-  // Simular llamada API
-  await new Promise(resolve => setTimeout(resolve, 300));
+  // Total de empleados activos
+  const { count: totalActivos, error: errorActivos } = await supabase
+    .from('usuario')
+    .select('*', { count: 'exact', head: true })
+    .eq('activo', true);
+
+  if (errorActivos) console.error('Error obteniendo total activos:', errorActivos);
+
+  // Total de inactivos (opcional, para el trend)
+  const { count: totalInactivos } = await supabase
+    .from('usuario')
+    .select('*', { count: 'exact', head: true })
+    .eq('activo', false);
+
+  // Los siguientes datos (presentes, retardos, ausencias) requieren tabla "asistencia"
+  // Se mantienen como mock hasta que exista
+  console.warn('getDashboardStats: presentes, retardos y ausencias son datos mock. Crea la tabla "asistencia" para obtener valores reales.');
+
   return [
-    { title: 'TOTAL EMPLEADOS', value: 142, trend: 'up', trendValue: '+3 este mes' },
-    { title: 'PRESENTES HOY', value: 118, subtitle: '83% de asistencia' },
-    { title: 'LLEGADAS TARDE', value: 9, trend: 'up', trendValue: '+2 vs ayer' },
-    { title: 'AUSENCIAS HOY', value: 15, subtitle: '+5 sin justificar', subtitleColor: '#d32f2f' },
+    {
+      title: 'TOTAL EMPLEADOS',
+      value: totalActivos ?? 0,
+      trend: 'up',
+      trendValue: `+${totalInactivos ?? 0} inactivos`,
+    },
+    {
+      title: 'PRESENTES HOY',
+      value: 118,
+      subtitle: '83% de asistencia',
+    },
+    {
+      title: 'LLEGADAS TARDE',
+      value: 9,
+      trend: 'up',
+      trendValue: '+2 vs ayer',
+    },
+    {
+      title: 'AUSENCIAS HOY',
+      value: 15,
+      subtitle: '+5 sin justificar',
+      subtitleColor: '#d32f2f',
+    },
   ];
 };
 
+// ========== EMPLEADOS (CRUD real con Supabase) ==========
+export const getEmployees = async (): Promise<Employee[]> => {
+  const { data, error } = await supabase
+    .from('usuario')
+    .select('id_usuario, nombre, apellido, email, identificacion, departamento, rol, activo')
+    .order('nombre');
+
+  if (error) throw new Error(error.message);
+
+  return data.map((user: any) => ({
+    id: user.id_usuario.toString(),
+    nombre: user.nombre,
+    apellido: user.apellido,
+    documento: user.identificacion,
+    email: user.email,
+    departamento: user.departamento?.toString() || '',
+    rol: user.rol,
+    activo: user.activo,
+  }));
+};
+
+export const createEmployee = async (data: EmployeeInput): Promise<Employee> => {
+  const { data: newUser, error } = await supabase
+    .from('usuario')
+    .insert({
+      nombre: data.nombre,
+      apellido: data.apellido,
+      email: data.email,
+      identificacion: data.documento,
+      departamento: data.departamento ? Number(data.departamento) : null,
+      rol: data.rol,
+      activo: data.activo,
+    })
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return {
+    id: newUser.id_usuario.toString(),
+    nombre: newUser.nombre,
+    apellido: newUser.apellido,
+    documento: newUser.identificacion,
+    email: newUser.email,
+    departamento: newUser.departamento?.toString() || '',
+    rol: newUser.rol,
+    activo: newUser.activo,
+  };
+};
+
+export const updateEmployee = async (id: string, data: EmployeeInput): Promise<Employee> => {
+  const { data: updated, error } = await supabase
+    .from('usuario')
+    .update({
+      nombre: data.nombre,
+      apellido: data.apellido,
+      email: data.email,
+      identificacion: data.documento,
+      departamento: data.departamento ? Number(data.departamento) : null,
+      rol: data.rol,
+      activo: data.activo,
+    })
+    .eq('id_usuario', id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return {
+    id: updated.id_usuario.toString(),
+    nombre: updated.nombre,
+    apellido: updated.apellido,
+    documento: updated.identificacion,
+    email: updated.email,
+    departamento: updated.departamento?.toString() || '',
+    rol: updated.rol,
+    activo: updated.activo,
+  };
+};
+
+export const deleteEmployee = async (id: string): Promise<void> => {
+  const { error } = await supabase.from('usuario').delete().eq('id_usuario', id);
+  if (error) throw new Error(error.message);
+};
+
+// ========== FUNCIONES MOCK (para futuras tablas) ==========
 export const getRecentAttendance = async (): Promise<AttendanceRecord[]> => {
+  console.warn('getRecentAttendance: datos mock. Crea la tabla "asistencia" para datos reales.');
   await new Promise(resolve => setTimeout(resolve, 300));
   return [
     { id: '1', employeeName: 'Laura Mendoza Finanzas', entryTime: '08:02', shift: '08:00–17:00', status: 'Puntual' },
@@ -54,6 +225,7 @@ export const getRecentAttendance = async (): Promise<AttendanceRecord[]> => {
 };
 
 export const getRecentActivity = async (): Promise<Activity[]> => {
+  console.warn('getRecentActivity: datos mock. Crea la tabla "actividad" para datos reales.');
   await new Promise(resolve => setTimeout(resolve, 300));
   return [
     { id: '1', description: 'Ana Morales registró entrada', timestamp: 'Hoy, 07:55 AM' },
@@ -65,6 +237,7 @@ export const getRecentActivity = async (): Promise<Activity[]> => {
 };
 
 export const getPendingRequests = async (): Promise<PendingRequest[]> => {
+  console.warn('getPendingRequests: datos mock. Crea la tabla "solicitudes" para datos reales.');
   await new Promise(resolve => setTimeout(resolve, 300));
   return [
     { id: '1', employeeName: 'Laura Mendoza', reason: 'Vacaciones - 5 días', date: '15 mar 2026' },
@@ -73,15 +246,8 @@ export const getPendingRequests = async (): Promise<PendingRequest[]> => {
   ];
 };
 
-
-
-export interface ChartData {
-  date: string;
-  asistencias: number;
-  ausencias: number;
-}
-
 export const getAttendanceChartData = async (): Promise<ChartData[]> => {
+  console.warn('getAttendanceChartData: datos mock. Crea la tabla "asistencia" para datos reales.');
   await new Promise(resolve => setTimeout(resolve, 300));
   return [
     { date: 'Lun', asistencias: 42, ausencias: 8 },
@@ -92,20 +258,9 @@ export const getAttendanceChartData = async (): Promise<ChartData[]> => {
   ];
 };
 
-
-
-export interface PieData {
-  name: string;        // Nombre del segmento
-  value: number;       // Valor numérico
-  children?: PieData[]; // Sub-segmentos para el segundo nivel
-}
-
-
 export const getRetirementData = async (): Promise<PieData[]> => {
-  // Simular un pequeño retraso de red
+  console.warn('getRetirementData: datos mock. Crea la tabla "retiros" para datos reales.');
   await new Promise(resolve => setTimeout(resolve, 300));
-
-  // Datos de ejemplo para el gráfico de dos niveles
   return [
     {
       name: 'Renuncias Voluntarias',
@@ -145,21 +300,8 @@ export const getRetirementData = async (): Promise<PieData[]> => {
   ];
 };
 
-
-
-// ========== ASISTENCIA ==========
-export interface AttendanceRecordDetail {
-  id: string;
-  employeeName: string;
-  date: string;
-  entryTime: string;
-  exitTime: string;
-  hoursWorked: string;
-  status: 'Completo' | 'Retardo' | 'Falta' | 'Permiso';
-}
-
 export const getAttendanceRecords = async (): Promise<AttendanceRecordDetail[]> => {
-  // Simular llamada API
+  console.warn('getAttendanceRecords: datos mock. Crea la tabla "asistencia" para datos reales.');
   await new Promise(resolve => setTimeout(resolve, 300));
   return [
     { id: '1', employeeName: 'Laura Mendoza', date: '24/04/2026', entryTime: '08:02', exitTime: '17:05', hoursWorked: '8h 3m', status: 'Completo' },
@@ -170,21 +312,8 @@ export const getAttendanceRecords = async (): Promise<AttendanceRecordDetail[]> 
   ];
 };
 
-
-
-// ========== SOLICITUDES ==========
-export interface LeaveRequest {
-  id: string;
-  employeeName: string;
-  type: 'Vacaciones' | 'Permiso médico' | 'Cambio de turno' | 'Estudio' | 'Otro';
-  startDate: string;
-  endDate: string;
-  reason: string;
-  status: 'Pendiente' | 'Aprobada' | 'Rechazada';
-  requestedDate: string;
-}
-
 export const getLeaveRequests = async (): Promise<LeaveRequest[]> => {
+  console.warn('getLeaveRequests: datos mock. Crea la tabla "solicitudes" para datos reales.');
   await new Promise(resolve => setTimeout(resolve, 300));
   return [
     { id: '1', employeeName: 'Laura Mendoza', type: 'Vacaciones', startDate: '15/05/2026', endDate: '25/05/2026', reason: 'Viaje familiar', status: 'Pendiente', requestedDate: '01/05/2026' },
@@ -193,59 +322,4 @@ export const getLeaveRequests = async (): Promise<LeaveRequest[]> => {
     { id: '4', employeeName: 'Roberto Gil', type: 'Estudio', startDate: '01/06/2026', endDate: '30/06/2026', reason: 'Curso de especialización', status: 'Pendiente', requestedDate: '15/05/2026' },
     { id: '5', employeeName: 'Karen Torres', type: 'Vacaciones', startDate: '01/06/2026', endDate: '07/06/2026', reason: 'Descanso', status: 'Aprobada', requestedDate: '10/05/2026' },
   ];
-};
-
-
-// ========== EMPLEADOS ==========
-export interface Employee {
-  id: string;
-  nombre: string;
-  documento: string;
-  email: string;
-  departamento: string;
-  estado: 'activo' | 'inactivo';
-}
-
-export type EmployeeInput = Omit<Employee, 'id'>;
-
-// Datos mock iniciales
-let mockEmployees: Employee[] = [
-  { id: '1', nombre: 'Laura Mendoza', documento: '12345678', email: 'laura@empresa.com', departamento: 'Finanzas', estado: 'activo' },
-  { id: '2', nombre: 'Jorge Paredes', documento: '87654321', email: 'jorge@empresa.com', departamento: 'Sistemas', estado: 'activo' },
-  { id: '3', nombre: 'Ana Morales', documento: '11223344', email: 'ana@empresa.com', departamento: 'RRHH', estado: 'activo' },
-  { id: '4', nombre: 'Roberto Gil', documento: '44332211', email: 'roberto@empresa.com', departamento: 'Ventas', estado: 'inactivo' },
-  { id: '5', nombre: 'Karen Torres', documento: '55667788', email: 'karen@empresa.com', departamento: 'Logística', estado: 'activo' },
-];
-
-// Obtener todos los empleados
-export const getEmployees = async (): Promise<Employee[]> => {
-  await new Promise(resolve => setTimeout(resolve, 300));
-  return [...mockEmployees];
-};
-
-// Crear empleado
-export const createEmployee = async (data: EmployeeInput): Promise<Employee> => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  const newEmployee: Employee = {
-    id: String(Date.now()),
-    ...data,
-  };
-  mockEmployees.push(newEmployee);
-  return newEmployee;
-};
-
-// Actualizar empleado
-export const updateEmployee = async (id: string, data: EmployeeInput): Promise<Employee> => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  const index = mockEmployees.findIndex(emp => emp.id === id);
-  if (index === -1) throw new Error('Empleado no encontrado');
-  const updatedEmployee = { ...mockEmployees[index], ...data };
-  mockEmployees[index] = updatedEmployee;
-  return updatedEmployee;
-};
-
-// Eliminar empleado
-export const deleteEmployee = async (id: string): Promise<void> => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  mockEmployees = mockEmployees.filter(emp => emp.id !== id);
 };

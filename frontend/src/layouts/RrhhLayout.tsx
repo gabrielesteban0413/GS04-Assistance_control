@@ -6,12 +6,37 @@ import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import { Sidebar } from '../components/common/Sidebar';
-
 const menuItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
-  { text: 'Empleados', icon: <PeopleIcon />, path: '/empleados' },
-  { text: 'Solicitudes', icon: <AssignmentIcon />, path: '/solicitudes' },
-  { text: 'Reportes', icon: <EventNoteIcon />, path: '/reportes' },
+  {
+    text: 'Dashboard',
+    icon: <DashboardIcon />,
+    path: '/rrhh',
+  },
+
+  {
+    text: 'Empleados',
+    icon: <PeopleIcon />,
+    path: '/rrhh/empleados',
+  },
+
+  {
+    text: 'Solicitudes',
+    icon: <AssignmentIcon />,
+    path: '/rrhh/solicitudes',
+  },
+
+  {
+    text: 'Registro',
+    icon: <AssignmentIcon />,
+    path: '/rrhh/registro',
+  },
+
+  {
+    text: 'Reportes',
+    icon: <EventNoteIcon />,
+    path: '/rrhh/reportes',
+  },
+
 ];
 
 interface RrhhLayoutProps {

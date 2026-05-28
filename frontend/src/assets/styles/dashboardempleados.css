@@ -1,4 +1,5 @@
 /* CONTENEDOR PRINCIPAL */
+
 .dashboard-container {
   width: 100%;
   min-height: 80vh;
@@ -9,13 +10,18 @@
 
   padding: 40px;
 }
+
 /* CARD */
 
 .dashboard-card {
   width: 100%;
   max-width: 550px;
+
   border-radius: 24px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+
+  box-shadow:
+    0 4px 20px
+    rgba(0, 0, 0, 0.1) !important;
 }
 
 /* CONTENIDO CARD */
@@ -29,15 +35,19 @@
 .dashboard-user {
   display: flex;
   align-items: center;
-  gap: 16px;
   justify-content: center;
+
+  gap: 16px;
+
   margin-bottom: 24px;
 }
 
 /* AVATAR */
 
 .dashboard-avatar {
-  background-color: #00a3cf !important;
+  background-color:
+    #00a3cf !important;
+
   width: 50px !important;
   height: 50px !important;
 }
@@ -46,7 +56,9 @@
 
 .dashboard-user-title {
   font-size: 32px !important;
+
   font-weight: bold !important;
+
   color: #00a3cf;
 }
 
@@ -54,6 +66,7 @@
 
 .dashboard-user-email {
   font-size: 14px;
+
   color: #777;
 }
 
@@ -67,9 +80,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 8px;
+
   padding: 10px;
+
   background-color: #f5f5f5;
+
   border-radius: 12px;
 }
 
@@ -77,6 +94,7 @@
 
 .dashboard-info-icon {
   color: #00a3cf;
+
   font-size: 20px !important;
 }
 
@@ -84,6 +102,7 @@
 
 .dashboard-info-text {
   color: #666;
+
   font-size: 14px !important;
 }
 
@@ -98,6 +117,7 @@
 .dashboard-logout {
   display: flex;
   justify-content: center;
+
   margin-top: 12px;
 }
 
@@ -109,4 +129,78 @@
 
 .dashboard-alert {
   width: 100%;
+}
+
+/* ========================= */
+/* MODAL */
+/* ========================= */
+
+.dashboard-modal {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  width: 100%;
+  max-width: 400px;
+
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 32px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+
+  box-shadow:
+    0 10px 40px
+    rgba(0, 0, 0, 0.2);
+
+  outline: none;
+}
+
+/* TITULO MODAL */
+
+.dashboard-modal-title {
+  text-align: center !important;
+
+  font-weight: bold !important;
+
+  color: #00a3cf;
+}
+
+/* INPUT */
+
+.dashboard-modal-input .MuiOutlinedInput-root {
+  border-radius: 14px;
+}
+
+/* BOTON */
+
+.dashboard-modal-button {
+  background-color:
+    #00a3cf !important;
+
+  color: white !important;
+
+  border-radius: 12px !important;
+
+  padding: 12px !important;
+
+  font-weight: bold !important;
+
+  text-transform: none !important;
+
+  transition: 0.3s;
+}
+
+.dashboard-modal-button:hover {
+  background-color:
+    #008bb0 !important;
 }

@@ -1,4 +1,5 @@
-import React from 'react';
+
+
 import {
   BrowserRouter,
   Routes,
@@ -19,7 +20,7 @@ import { Toaster } from '@/components/ui/sonner';
 
 import { AdminLayout } from './layouts/AdminLayout';
 
-import { EmployeeLayout } from './layouts/EmployeeLayout';
+import { RrhhLayout } from './layouts/RrhhLayout';
 
 /* ADMIN */
 
@@ -33,11 +34,20 @@ import EmpleadosPage from './pages/admin/Empleados.page';
 
 import HorariosPage from './pages/admin/Horarios.page';
 
+
 import ConfiguracionPage from './pages/admin/Configuracion.page';
 
-/* EMPLOYEE */
+/* RRHH */
 
-import EmployeeDashboardPage from './pages/employee/Dashboard.page';
+import RrhhDashboardPage from './pages/rrhh/Dashboard.page';
+
+import RrhhEmpleadosPage from './pages/rrhh/Empleados.page';
+
+import RegisterPage from './pages/rrhh/registerpage';
+
+import ReportesPage from './pages/rrhh/Reportes.page';
+
+import SolicitudesRrhhPage from './pages/rrhh/Solicitudes.page';
 
 /* AUTH */
 
@@ -70,7 +80,7 @@ function App() {
 
         <Routes>
 
-          {/* PUBLICAS */}
+          {/* RUTAS PUBLICAS */}
 
           <Route
             path="/login"
@@ -144,7 +154,10 @@ function App() {
                 path="privacidad"
                 element={<ConfiguracionPage />}
               />
-
+ <Route
+              path="empleados"
+              element={<RrhhEmpleadosPage />}
+            />
               <Route
                 path="seguridad"
                 element={<ConfiguracionPage />}
@@ -154,20 +167,50 @@ function App() {
 
           </Route>
 
-          {/* EMPLEADO */}
+          {/* RRHH */}
 
           <Route
-            path="/employee"
+            path="/rrhh"
             element={
-              <EmployeeLayout
+              <RrhhLayout
                 onLogout={mockLogout}
               />
             }
           >
 
+            {/* DASHBOARD RRHH */}
+
             <Route
               index
-              element={<EmployeeDashboardPage />}
+              element={<RrhhDashboardPage />}
+            />
+
+            {/* EMPLEADOS */}
+
+            <Route
+              path="empleados"
+              element={<RrhhEmpleadosPage />}
+            />
+
+            {/* REGISTRO */}
+
+            <Route
+              path="registro"
+              element={<RegisterPage />}
+            />
+
+            {/* REPORTES */}
+
+            <Route
+              path="reportes"
+              element={<ReportesPage />}
+            />
+
+            {/* SOLICITUDES */}
+
+            <Route
+              path="solicitudes"
+              element={<SolicitudesRrhhPage />}
             />
 
           </Route>

@@ -6,6 +6,7 @@ import {
   Route,
   Navigate
 } from 'react-router-dom';
+import PrivateRoute from './components/shared/PrivateRoute';
 
 import {
   ThemeProvider,
@@ -97,123 +98,128 @@ function App() {
             element={<ResetPassword />}
           />
 
-          {/* ADMIN */}
+          {/* RUTAS PROTEGIDAS */}
 
-          <Route
-            path="/"
-            element={
-              <AdminLayout
-                onLogout={mockLogout}
-              />
-            }
-          >
+          <Route element={<PrivateRoute />}>
+
+            {/* ADMIN */}
 
             <Route
-              index
-              element={<DashboardPage />}
-            />
-
-            <Route
-              path="asistencia"
-              element={<AsistenciaPage />}
-            />
-
-            <Route
-              path="solicitudes"
-              element={<SolicitudesPage />}
-            />
-
-            <Route
-              path="empleados"
-              element={<EmpleadosPage />}
-            />
-
-            <Route
-              path="horarios"
-              element={<HorariosPage />}
-            />
-
-            <Route path="configuracion">
+              path="/"
+              element={
+                <AdminLayout
+                  onLogout={mockLogout}
+                />
+              }
+            >
 
               <Route
                 index
-                element={
-                  <Navigate
-                    to="/configuracion/general"
-                    replace
-                  />
-                }
+                element={<DashboardPage />}
               />
 
               <Route
-                path="general"
-                element={<ConfiguracionPage />}
+                path="asistencia"
+                element={<AsistenciaPage />}
               />
 
               <Route
-                path="privacidad"
-                element={<ConfiguracionPage />}
+                path="solicitudes"
+                element={<SolicitudesPage />}
               />
- <Route
-              path="empleados"
-              element={<RrhhEmpleadosPage />}
-            />
+
               <Route
-                path="seguridad"
-                element={<ConfiguracionPage />}
+                path="empleados"
+                element={<EmpleadosPage />}
+              />
+
+              <Route
+                path="horarios"
+                element={<HorariosPage />}
+              />
+
+              <Route path="configuracion">
+
+                <Route
+                  index
+                  element={
+                    <Navigate
+                      to="/configuracion/general"
+                      replace
+                    />
+                  }
+                />
+
+                <Route
+                  path="general"
+                  element={<ConfiguracionPage />}
+                />
+
+                <Route
+                  path="privacidad"
+                  element={<ConfiguracionPage />}
+                />
+
+                <Route
+                  path="empleados"
+                  element={<RrhhEmpleadosPage />}
+                />
+
+                <Route
+                  path="seguridad"
+                  element={<ConfiguracionPage />}
+                />
+
+              </Route>
+
+            </Route>
+
+            {/* RRHH */}
+
+            <Route
+              path="/rrhh"
+              element={
+                <RrhhLayout
+                  onLogout={mockLogout}
+                />
+              }
+            >
+
+              <Route
+                index
+                element={<RrhhDashboardPage />}
+              />
+
+              <Route
+                path="empleados"
+                element={<RrhhEmpleadosPage />}
+              />
+
+              <Route
+                path="registro"
+                element={<RegisterPage />}
+              />
+
+              <Route
+                path="reportes"
+                element={<ReportesPage />}
+              />
+
+              <Route
+                path="solicitudes"
+                element={<SolicitudesRrhhPage />}
               />
 
             </Route>
 
           </Route>
 
-          {/* RRHH */}
+          {/* FALLBACK */}
 
           <Route
-            path="/rrhh"
-            element={
-              <RrhhLayout
-                onLogout={mockLogout}
-              />
-            }
-          >
-
-            {/* DASHBOARD RRHH */}
-
-            <Route
-              index
-              element={<RrhhDashboardPage />}
-            />
-
-            {/* EMPLEADOS */}
-
-            <Route
-              path="empleados"
-              element={<RrhhEmpleadosPage />}
-            />
-
-            {/* REGISTRO */}
-
-            <Route
-              path="registro"
-              element={<RegisterPage />}
-            />
-
-            {/* REPORTES */}
-
-            <Route
-              path="reportes"
-              element={<ReportesPage />}
-            />
-
-            {/* SOLICITUDES */}
-
-            <Route
-              path="solicitudes"
-              element={<SolicitudesRrhhPage />}
-            />
-
-          </Route>
+            path="*"
+            element={<Navigate to="/login" replace />}
+          />
 
         </Routes>
 

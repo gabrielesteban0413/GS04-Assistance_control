@@ -1,0 +1,11 @@
+services:
+  backend:
+    container_name: assystand-control-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "6700:6700"
+    env_file:
+      - .env
+    restart: unless-stopped

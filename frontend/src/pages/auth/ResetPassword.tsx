@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+// import { supabase } from '../../lib/supabase';
 import logo from '../../assets/images/login.png';
 import '../../assets/styles/auth.css';
 
@@ -28,17 +28,17 @@ const ResetPassword: React.FC = () => {
     }
 
     setLoading(true);
-    const { error: updateError } = await supabase.auth.updateUser({
-      password: password,
-    });
+    // const { error: updateError } = await supabase.auth.updateUser({
+    //   password: password,
+    // });
 
-    if (updateError) {
-      setError(updateError.message);
-    } else {
-      setMessage('Contraseña actualizada correctamente. Redirigiendo al login...');
-      setTimeout(() => navigate('/login'), 3000);
-    }
-    setLoading(false);
+    // if (updateError) {
+    //   setError(updateError.message);
+    // } else {
+    //   setMessage('Contraseña actualizada correctamente. Redirigiendo al login...');
+    //   setTimeout(() => navigate('/login'), 3000);
+    // }
+    // setLoading(false);
   };
 
   return (

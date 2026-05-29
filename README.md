@@ -181,3 +181,29 @@ mi-proyecto-asistencia/
     ├── user-manual.md
     ├── api-docs.md
     └── rrhh-setup.md                    # Explicación del usuario RRHH por defecto
+
+
+## BACKEND 
+
+### MIGRATIONS 
+```sh
+bun run migration:generate -- migrations/{migration_name}
+```
+
+### Create Migration
+
+```sh
+bun run migration:create
+```
+
+### Run Migrate
+
+```sh
+bun run migration:run
+```
+
+### Reverte Migration
+
+```sh
+bun run migration:revert
+```

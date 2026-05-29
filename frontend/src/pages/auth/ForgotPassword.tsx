@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+// import { supabase } from '../../lib/supabase';
 import logo from '../../assets/images/login.png';
 import '../../assets/styles/auth.css';
 
@@ -17,16 +17,16 @@ const ForgotPassword: React.FC = () => {
     setMessage('');
     setLoading(true);
 
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
-    });
+    // const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+    //   redirectTo: `${window.location.origin}/reset-password`,
+    // });
 
-    if (resetError) {
-      setError(resetError.message);
-    } else {
-      setMessage('Revisa tu correo electrónico. Te hemos enviado un enlace para restablecer tu contraseña.');
-    }
-    setLoading(false);
+    // if (resetError) {
+    //   setError(resetError.message);
+    // } else {
+    //   setMessage('Revisa tu correo electrónico. Te hemos enviado un enlace para restablecer tu contraseña.');
+    // }
+    // setLoading(false);
   };
 
   return (

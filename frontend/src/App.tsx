@@ -1,17 +1,7 @@
-
-
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate
-} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PrivateRoute from './components/shared/PrivateRoute';
 
-import {
-  ThemeProvider,
-  createTheme
-} from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -35,9 +25,6 @@ import EmpleadosPage from './pages/admin/Empleados.page';
 
 import HorariosPage from './pages/admin/Horarios.page';
 
-
-import ConfiguracionPage from './pages/admin/Configuracion.page';
-
 /* RRHH */
 
 import RrhhDashboardPage from './pages/rrhh/Dashboard.page';
@@ -59,179 +46,98 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
+    palette: {
+        primary: {
+            main: '#1976d2',
+        },
     },
-  },
 });
 
-const mockLogout = () =>
-  console.log('Cerrar sesión');
+const mockLogout = () => console.log('Cerrar sesión');
 
 function App() {
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
 
-  return (
+            <BrowserRouter>
+                <Routes>
+                    {/* RUTAS PUBLICAS */}
 
-    <ThemeProvider theme={theme}>
+                    <Route path="/login" element={<SignIn />} />
 
-      <CssBaseline />
-
-      <BrowserRouter>
-
-        <Routes>
-
-          {/* RUTAS PUBLICAS */}
-
-          <Route
-            path="/login"
-            element={<SignIn />}
-          />
-
-          <Route
-            path="/forgot-password"
-            element={<ForgotPassword />}
-          />
-
-          <Route
-            path="/reset-password"
-            element={<ResetPassword />}
-          />
-
-          {/* RUTAS PROTEGIDAS */}
-
-          <Route element={<PrivateRoute />}>
-
-            {/* ADMIN */}
-
-            <Route
-              path="/"
-              element={
-                <AdminLayout
-                  onLogout={mockLogout}
-                />
-              }
-            >
-
-              <Route
-                index
-                element={<DashboardPage />}
-              />
-
-              <Route
-                path="asistencia"
-                element={<AsistenciaPage />}
-              />
-
-              <Route
-                path="solicitudes"
-                element={<SolicitudesPage />}
-              />
-
-              <Route
-                path="empleados"
-                element={<EmpleadosPage />}
-              />
-
-              <Route
-                path="horarios"
-                element={<HorariosPage />}
-              />
-
-              <Route path="configuracion">
-
-                <Route
-                  index
-                  element={
-                    <Navigate
-                      to="/configuracion/general"
-                      replace
+                    <Route
+                        path="/forgot-password"
+                        element={<ForgotPassword />}
                     />
-                  }
-                />
 
-                <Route
-                  path="general"
-                  element={<ConfiguracionPage />}
-                />
+                    <Route path="/reset-password" element={<ResetPassword />} />
 
-                <Route
-                  path="privacidad"
-                  element={<ConfiguracionPage />}
-                />
+                    {/* RUTAS PROTEGIDAS */}
 
-                <Route
-                  path="empleados"
-                  element={<RrhhEmpleadosPage />}
-                />
+                    <Route element={<PrivateRoute />}>
+                        {/* ADMIN */}
 
-                <Route
-                  path="seguridad"
-                  element={<ConfiguracionPage />}
-                />
+                        <Route
+                            path="/"
+                            element={<AdminLayout onLogout={mockLogout} />}
+                        >
+                            <Route index element={<DashboardPage />} />
 
-              </Route>
+                            <Route
+                                path="asistencia"
+                                element={<AsistenciaPage />}
+                            />
 
-            </Route>
+                            <Route
+                                path="solicitudes"
+                                element={<SolicitudesPage />}
+                            />
 
-            {/* RRHH */}
+                            <Route
+                                path="empleados"
+                                element={<EmpleadosPage />}
+                            />
 
-            <Route
-              path="/rrhh"
-              element={
-                <RrhhLayout
-                  onLogout={mockLogout}
-                />
-              }
-            >
+                            <Route path="horarios" element={<HorariosPage />} />
+                        </Route>
 
-              <Route
-                index
-                element={<RrhhDashboardPage />}
-              />
+                        {/* RRHH */}
 
-              <Route
-                path="empleados"
-                element={<RrhhEmpleadosPage />}
-              />
+                        <Route
+                            path="/rrhh"
+                            element={<RrhhLayout onLogout={mockLogout} />}
+                        >
+                            <Route index element={<RrhhDashboardPage />} />
 
-              <Route
-                path="registro"
-                element={<RegisterPage />}
-              />
+                            <Route
+                                path="empleados"
+                                element={<RrhhEmpleadosPage />}
+                            />
 
-              <Route
-                path="reportes"
-                element={<ReportesPage />}
-              />
+                            <Route path="registro" element={<RegisterPage />} />
 
-              <Route
-                path="solicitudes"
-                element={<SolicitudesRrhhPage />}
-              />
+                            <Route path="reportes" element={<ReportesPage />} />
 
-            </Route>
+                            <Route
+                                path="solicitudes"
+                                element={<SolicitudesRrhhPage />}
+                            />
+                        </Route>
+                    </Route>
 
-          </Route>
+                    {/* FALLBACK */}
 
-          {/* FALLBACK */}
+                    <Route
+                        path="*"
+                        element={<Navigate to="/login" replace />}
+                    />
+                </Routes>
+            </BrowserRouter>
 
-          <Route
-            path="*"
-            element={<Navigate to="/login" replace />}
-          />
-
-        </Routes>
-
-      </BrowserRouter>
-
-      <Toaster
-        richColors
-        position="top-center"
-      />
-
-    </ThemeProvider>
-  );
+            <Toaster richColors position="top-center" />
+        </ThemeProvider>
+    );
 }
 
 export default App;
